@@ -1,0 +1,26 @@
+{
+  "metadata": {
+    "title": "مفتاح ترخيص مخصص",
+    "description": "مفتاح ترخيص مرتبط بالجهاز 003ca4ce2182",
+    "version": "1.0.0",
+    "generatedAt": "2026-02-06T10:51:32.030Z",
+    "deviceId": "003ca4ce2182",
+    "generator": "Custom Device License Generator v1.0"
+  },
+  "license": {
+    "licenseKey": "AC072-A73FF-80EA3-DEB3C",
+    "deviceId": "003ca4ce2182",
+    "metadata": {
+      "licenseType": "PROFESSIONAL",
+      "region": "GLOBAL",
+      "isLifetime": true,
+      "maxDevices": 1,
+      "generatedFor": "specific-device-activation",
+      "customActivation": true
+    },
+    "generatedAt": "2026-02-06T10:51:32.029Z",
+    "id": "27a83ade-fa2a-4230-a58c-b2fd53a3cd27",
+    "deviceIdShort": "003ca4ce2182...",
+    "fullDeviceId": "003ca4ce2182"
+  }
+}

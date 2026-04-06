@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+
+    <!-- <link rel="icon" type="image/x-icon" href="/icon.ico" /> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./fonts/fonts.css" />
+    <title>Dental Clinic Management AgorraCode</title>
+
+    <!-- ✅ معالج الأخطاء الشامل -->
+    <script>
+      // معالج الأخطاء العام
+      window.addEventListener("error", function (event) {
+        console.error("❌ Global Error:", event.error);
+        console.error("  Message:", event.message);
+        console.error("  Source:", event.filename);
+        console.error("  Line:", event.lineno);
+        console.error("  Column:", event.colno);
+      });
+
+      window.addEventListener("unhandledrejection", function (event) {
+        console.error("❌ Unhandled Promise Rejection:", event.reason);
+      });
+
+      // تسجيل حالة التحميل
+      console.log("🚀 HTML loaded, initializing...");
+    </script>
+
+    <!-- Immediate dark mode initialization to prevent flash -->
+    <script>
+      (function () {
+        try {
+          console.log("🎨 Initializing theme...");
+          const storedTheme = localStorage.getItem("dental-clinic-theme");
+          const systemPrefersDark = window.matchMedia(
+            "(prefers-color-scheme: dark)"
+          ).matches;
+
+          let shouldBeDark = false;
+          if (storedTheme) {
+            shouldBeDark = storedTheme === "dark";
+          } else {
+            shouldBeDark = systemPrefersDark;
+            localStorage.setItem(
+              "dental-clinic-theme",
+              shouldBeDark ? "dark" : "light"
+            );
+          }
+
+          if (shouldBeDark) {
+            document.documentElement.classList.add("dark");
+          } else {
+            document.documentElement.classList.remove("dark");
+          }
+
+          console.log("✅ Theme initialized:", shouldBeDark ? "dark" : "light");
+        } catch (e) {
+          // Fallback to light mode if there's any error
+          console.warn("⚠️ Failed to initialize theme:", e);
+        }
+      })();
+    </script>
+
+    <!-- ✅ فحص البيئة -->
+    <script>
+      console.log("🔍 Environment Check:");
+      console.log("  - User Agent:", navigator.userAgent);
+      console.log("  - Platform:", navigator.platform);
+      console.log("  - Language:", navigator.language);
+      console.log("  - Online:", navigator.onLine);
+      console.log("  - Cookies Enabled:", navigator.cookieEnabled);
+      console.log(
+        "  - Local Storage Available:",
+        typeof Storage !== "undefined"
+      );
+    </script>
+    <script type="module" crossorigin src="./assets/index-d4eca3d1.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/vendor-696af5bd.js">
+    <link rel="modulepreload" crossorigin href="./assets/ui-25d86217.js">
+    <link rel="modulepreload" crossorigin href="./assets/charts-b4389b44.js">
+    <link rel="modulepreload" crossorigin href="./assets/utils-8ff0201e.js">
+    <link rel="modulepreload" crossorigin href="./assets/qr-d6f50769.js">
+    <link rel="modulepreload" crossorigin href="./assets/pdf-75f9342a.js">
+    <link rel="modulepreload" crossorigin href="./assets/excel-37615a09.js">
+    <link rel="stylesheet" href="./assets/index-29e05b99.css">
+  </head>
+  <body>
+    <div id="root"></div>
+
+    
+  </body>
+</html>

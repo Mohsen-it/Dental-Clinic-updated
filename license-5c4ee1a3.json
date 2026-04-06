@@ -1,0 +1,26 @@
+{
+  "metadata": {
+    "title": "مفتاح ترخيص مخصص",
+    "description": "مفتاح ترخيص مرتبط بالجهاز 5c4ee1a309fe60fb8bf756e6993e1ba4",
+    "version": "1.0.0",
+    "generatedAt": "2026-02-06T10:50:20.824Z",
+    "deviceId": "5c4ee1a309fe60fb8bf756e6993e1ba4",
+    "generator": "Custom Device License Generator v1.0"
+  },
+  "license": {
+    "licenseKey": "F77B1-9AADC-4F23F-E5F47",
+    "deviceId": "5c4ee1a309fe60fb8bf756e6993e1ba4",
+    "metadata": {
+      "licenseType": "PROFESSIONAL",
+      "region": "GLOBAL",
+      "isLifetime": true,
+      "maxDevices": 1,
+      "generatedFor": "specific-device-activation",
+      "customActivation": true
+    },
+    "generatedAt": "2026-02-06T10:50:20.820Z",
+    "id": "63bd93e0-bda2-483a-bdc6-b767849da132",
+    "deviceIdShort": "5c4ee1a309fe...",
+    "fullDeviceId": "5c4ee1a309fe60fb8bf756e6993e1ba4"
+  }
+}

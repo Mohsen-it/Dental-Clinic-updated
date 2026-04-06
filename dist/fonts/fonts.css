@@ -1,0 +1,151 @@
+/* ITF Qomra Arabic Font Family - Complete Font Setup */
+
+/* Light - 300 */
+@font-face {
+  font-family: 'ITF Qomra Arabic';
+  src: url('./itfQomraArabic-Light.eot');
+  src: url('./itfQomraArabic-Light.eot?#iefix') format('embedded-opentype'),
+       url('./itfQomraArabic-Light.woff2') format('woff2'),
+       url('./itfQomraArabic-Light.woff') format('woff'),
+       url('./itfQomraArabic-Light.ttf') format('truetype'),
+       url('./itfQomraArabic-Light.svg#itfQomraArabic-Light') format('svg');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Regular - 400 */
+@font-face {
+  font-family: 'ITF Qomra Arabic';
+  src: url('./itfQomraArabic-Regular.eot');
+  src: url('./itfQomraArabic-Regular.eot?#iefix') format('embedded-opentype'),
+       url('./itfQomraArabic-Regular.woff2') format('woff2'),
+       url('./itfQomraArabic-Regular.woff') format('woff'),
+       url('./itfQomraArabic-Regular.ttf') format('truetype'),
+       url('./itfQomraArabic-Regular.svg#itfQomraArabic-Regular') format('svg');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Medium - 500 */
+@font-face {
+  font-family: 'ITF Qomra Arabic';
+  src: url('./itfQomraArabic-Medium.eot');
+  src: url('./itfQomraArabic-Medium.eot?#iefix') format('embedded-opentype'),
+       url('./itfQomraArabic-Medium.woff2') format('woff2'),
+       url('./itfQomraArabic-Medium.woff') format('woff'),
+       url('./itfQomraArabic-Medium.ttf') format('truetype'),
+       url('./itfQomraArabic-Medium.svg#itfQomraArabic-Medium') format('svg');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Bold - 700 */
+@font-face {
+  font-family: 'ITF Qomra Arabic';
+  src: url('./itfQomraArabic-Bold.eot');
+  src: url('./itfQomraArabic-Bold.eot?#iefix') format('embedded-opentype'),
+       url('./itfQomraArabic-Bold.woff2') format('woff2'),
+       url('./itfQomraArabic-Bold.woff') format('woff'),
+       url('./itfQomraArabic-Bold.ttf') format('truetype'),
+       url('./itfQomraArabic-Bold.svg#itfQomraArabic-Bold') format('svg');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Black - 900 */
+@font-face {
+  font-family: 'ITF Qomra Arabic';
+  src: url('./itfQomraArabic-Black.eot');
+  src: url('./itfQomraArabic-Black.eot?#iefix') format('embedded-opentype'),
+       url('./itfQomraArabic-Black.woff2') format('woff2'),
+       url('./itfQomraArabic-Black.woff') format('woff'),
+       url('./itfQomraArabic-Black.ttf') format('truetype'),
+       url('./itfQomraArabic-Black.svg#itfQomraArabic-Black') format('svg');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* CSS Variables for consistent font usage */
+:root {
+  --font-arabic: 'ITF Qomra Arabic', 'Cairo', 'Amiri', Arial, sans-serif;
+  --font-arabic-display: 'ITF Qomra Arabic', 'Cairo', Arial, sans-serif;
+  --font-arabic-body: 'ITF Qomra Arabic', Arial, sans-serif;
+}
+
+/* Utility classes for Arabic text */
+.font-arabic {
+  font-family: var(--font-arabic);
+}
+
+.font-arabic-display {
+  font-family: var(--font-arabic-display);
+}
+
+.font-arabic-body {
+  font-family: var(--font-arabic-body);
+}
+
+/* RTL text direction utilities */
+.rtl {
+  direction: rtl;
+  text-align: right;
+}
+
+.ltr {
+  direction: ltr;
+  text-align: left;
+}
+
+/* PDF-specific styles */
+.pdf-content {
+  font-family: var(--font-arabic);
+  direction: rtl;
+  line-height: 1.6;
+  font-feature-settings: "liga" 1, "kern" 1;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.pdf-header {
+  font-family: var(--font-arabic-display);
+  font-weight: 700;
+}
+
+.pdf-body {
+  font-family: var(--font-arabic-body);
+  font-weight: 400;
+}
+
+.pdf-table {
+  font-family: var(--font-arabic);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Print optimizations */
+@media print {
+  * {
+    -webkit-print-color-adjust: exact !important;
+    color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  
+  .pdf-content {
+    font-size: 12pt;
+    line-height: 1.4;
+  }
+  
+  .pdf-header {
+    font-size: 18pt;
+    font-weight: 700;
+  }
+  
+  .pdf-table {
+    font-size: 10pt;
+  }
+}
