@@ -342,10 +342,10 @@ export default function PatientTable({
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-3 sm:space-y-4">
       <div className="border rounded-lg overflow-hidden">
         <div className="overflow-x-auto">
-          <Table className="table-center-all">
+          <Table className="table-center-all min-w-[900px]">
             <TableHeader>
               <TableRow className="bg-muted/50">
                 <TableHead className="text-center w-12 max-w-12 min-w-12">
@@ -468,7 +468,7 @@ export default function PatientTable({
                     title="عرض تفاصيل المريض"
                   >
                     <Eye className="w-3 h-3" />
-                    <span className="text-xs arabic-enhanced hidden sm:inline ml-1">عرض</span>
+                    {/* <span className="text-xs arabic-enhanced hidden sm:inline ml-1">عرض</span> */}
                   </Button>
 
                   <Button
@@ -479,7 +479,7 @@ export default function PatientTable({
                     title="تعديل بيانات المريض"
                   >
                     <Edit className="w-3 h-3" />
-                    <span className="text-xs arabic-enhanced hidden sm:inline ml-1">تعديل</span>
+                    {/* <span className="text-xs arabic-enhanced hidden sm:inline ml-1">تعديل</span> */}
                   </Button>
                   <Button
                     variant="ghost"
@@ -489,7 +489,7 @@ export default function PatientTable({
                     title="حذف المريض"
                   >
                     <Trash2 className="w-3 h-3" />
-                    <span className="text-xs arabic-enhanced hidden sm:inline ml-1">حذف</span>
+                    {/* <span className="text-xs arabic-enhanced hidden sm:inline ml-1">حذف</span> */}
                   </Button>
 
                   {/* قائمة مزيد للأزرار الإضافية */}
@@ -545,21 +545,21 @@ export default function PatientTable({
 
     {/* Pagination Controls */}
     {totalCount > 0 && (
-      <div className="flex items-center justify-between px-2">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 px-2">
         <div className="flex items-center space-x-2 space-x-reverse">
-          <p className="text-sm text-muted-foreground arabic-enhanced">
+          <p className="text-xs sm:text-sm text-muted-foreground arabic-enhanced text-center sm:text-right">
             عرض {((currentPage - 1) * pageSize) + 1} إلى {Math.min(currentPage * pageSize, totalCount)} من {totalCount} مريض
           </p>
         </div>
 
-        <div className="flex items-center space-x-6 space-x-reverse lg:space-x-8">
+        <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 lg:gap-6">
           <div className="flex items-center space-x-2 space-x-reverse">
-            <p className="text-sm font-medium arabic-enhanced">عدد الصفوف لكل صفحة</p>
+            <p className="text-xs sm:text-sm font-medium arabic-enhanced hidden sm:inline">عدد الصفوف لكل صفحة</p>
             <Select
               value={`${pageSize}`}
               onValueChange={handlePageSizeChange}
             >
-              <SelectTrigger className="h-8 w-[70px]">
+              <SelectTrigger className="h-8 w-[70px] text-xs sm:text-sm">
                 <SelectValue placeholder={pageSize} />
               </SelectTrigger>
               <SelectContent side="top">
@@ -572,11 +572,11 @@ export default function PatientTable({
             </Select>
           </div>
 
-          <div className="flex w-[100px] items-center justify-center text-sm font-medium arabic-enhanced">
+          <div className="flex w-[100px] items-center justify-center text-xs sm:text-sm font-medium arabic-enhanced">
             صفحة {currentPage} من {totalPages}
           </div>
 
-          <div className="flex items-center space-x-2 space-x-reverse">
+          <div className="flex items-center space-x-1 sm:space-x-2 space-x-reverse">
             <Button
               variant="outline"
               className="hidden h-8 w-8 p-0 lg:flex"

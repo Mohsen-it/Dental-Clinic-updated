@@ -222,7 +222,7 @@ export default function LabTable({ labs, onEdit, onDelete, searchQuery }: LabTab
                     onClick={() => handleEdit(lab)}
                   >
                     <Edit className="w-4 h-4 ml-1" />
-                    <span className="text-xs arabic-enhanced">تعديل</span>
+                    {/* <span className="text-xs arabic-enhanced">تعديل</span> */}
                   </Button>
                   <Button
                     variant="ghost"
@@ -231,7 +231,7 @@ export default function LabTable({ labs, onEdit, onDelete, searchQuery }: LabTab
                     onClick={() => handleDelete(lab)}
                   >
                     <Trash2 className="w-4 h-4 ml-1" />
-                    <span className="text-xs arabic-enhanced">حذف</span>
+                    {/* <span className="text-xs arabic-enhanced">حذف</span> */}
                   </Button>
                 </div>
               </TableCell>

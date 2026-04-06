@@ -6,7 +6,7 @@ import { BackupService } from '../src/services/backupService'
 import { AutoSaveService } from '../src/services/autoSaveService'
 import { ReportsService } from '../src/services/reportsService'
 
-const isDev = process.env.IS_DEV === 'true'
+const isDev = process.env.IS_DEV === 'true' || process.env.NODE_ENV === 'development'
 
 let mainWindow: BrowserWindow | null = null
 let databaseService: DatabaseService
@@ -15,6 +15,10 @@ let autoSaveService: AutoSaveService
 let reportsService: ReportsService
 
 function createWindow(): void {
+  const iconPath = isDev
+    ? join(__dirname, '../assets/icon.ico')
+    : join(process.resourcesPath, 'assets', 'icon.ico')
+
   mainWindow = new BrowserWindow({
     width: 1400,
     height: 900,
@@ -26,7 +30,7 @@ function createWindow(): void {
       contextIsolation: true,
       enableRemoteModule: false,
     },
-  icon: join(__dirname, '../assets/icon.ico'),
+    icon: iconPath,
     titleBarStyle: 'default',
     show: false,
   })

@@ -261,7 +261,7 @@ export default function LabOrderTable({ labOrders, onEdit, onDelete, onView }: L
                     onClick={() => onEdit(order)}
                   >
                     <Edit className="w-4 h-4 ml-1" />
-                    <span className="text-xs arabic-enhanced">تعديل</span>
+                    {/* <span className="text-xs arabic-enhanced">تعديل</span> */}
                   </Button>
                   <Button
                     variant="ghost"
@@ -270,7 +270,7 @@ export default function LabOrderTable({ labOrders, onEdit, onDelete, onView }: L
                     onClick={() => onDelete(order)}
                   >
                     <Trash2 className="w-4 h-4 ml-1" />
-                    <span className="text-xs arabic-enhanced">حذف</span>
+                    {/* <span className="text-xs arabic-enhanced">حذف</span> */}
                   </Button>
                 </div>
               </TableCell>

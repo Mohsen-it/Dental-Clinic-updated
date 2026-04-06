@@ -451,7 +451,7 @@ export default function PaymentTable({
                         title="عرض التفاصيل"
                       >
                         <Eye className="w-4 h-4 ml-1" />
-                        <span className="text-xs arabic-enhanced">تفاصيل</span>
+                        {/* <span className="text-xs arabic-enhanced">تفاصيل</span> */}
                       </Button>
                       <Button
                         variant="ghost"
@@ -460,7 +460,7 @@ export default function PaymentTable({
                         onClick={() => onShowReceipt(payment)}
                       >
                         <Printer className="w-4 h-4 ml-1" />
-                        <span className="text-xs arabic-enhanced">إيصال</span>
+                        {/* <span className="text-xs arabic-enhanced">إيصال</span> */}
                       </Button>
                       <Button
                         variant="ghost"
@@ -469,7 +469,7 @@ export default function PaymentTable({
                         onClick={() => onEdit(payment)}
                       >
                         <Edit className="w-4 h-4 ml-1" />
-                        <span className="text-xs arabic-enhanced">تعديل</span>
+                        {/* <span className="text-xs arabic-enhanced">تعديل</span> */}
                       </Button>
                       <Button
                         variant="ghost"
@@ -478,7 +478,7 @@ export default function PaymentTable({
                         onClick={() => onDelete(payment)}
                       >
                         <Trash2 className="w-4 h-4 ml-1" />
-                        <span className="text-xs arabic-enhanced">حذف</span>
+                        {/* <span className="text-xs arabic-enhanced">حذف</span> */}
                       </Button>
                     </div>
                   </TableCell>
