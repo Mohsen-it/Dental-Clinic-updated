@@ -118,36 +118,28 @@ export function AppSidebar({ activeTab, onTabChange, ...props }: AppSidebarProps
       borderRadius: '0 1.5rem 1.5rem 0',
       background: 'hsl(var(--sidebar-background))'
     }} {...props}>
-      <SidebarHeader className="border-b border-border/30 bg-gradient-to-l from-background via-accent/10 to-accent/5 px-5 py-6">
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton size="lg" asChild>
-              <div className="flex items-center gap-4 p-3 rounded-2xl hover:bg-accent/20 transition-all duration-300 ease-out flex-rtl group cursor-pointer glass-card">
-                <div 
-                  className="flex aspect-square size-14 items-center justify-center rounded-2xl bg-gradient-to-br from-primary via-primary/90 to-secondary text-white overflow-hidden relative"
-                  style={{
-                    boxShadow: '0 6px 16px -4px hsl(var(--primary) / 0.4), 0 0 0 1px rgba(255, 255, 255, 0.15) inset',
-                  }}
-                >
-                  <Stethoscope className="size-7 drop-shadow-sm" strokeWidth={2.5} />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/15 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"></div>
-                </div>
-                <div className="grid flex-1 text-right leading-relaxed gap-0.5">
-                  <span 
-                    className="truncate font-extrabold text-lg tracking-tight text-foreground"
-                    style={{ letterSpacing: '0.01em' }}
-                  >
-                    {clinicName}
-                  </span>
-                  <span className="truncate text-[11px] font-semibold uppercase tracking-wide opacity-70 text-muted-foreground">
-                    نظام إدارة العيادة
-                  </span>
-                </div>
+
+  
+            <div className="flex items-center gap-3.5 p-3 rounded-xl hover:bg-accent/20 transition-all duration-300 ease-out cursor-pointer group">
+              <div 
+                className="flex aspect-square size-12 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-secondary text-white overflow-hidden relative ring-2 ring-primary/20"
+                style={{
+                  boxShadow: '0 4px 12px -2px hsl(var(--primary) / 0.3)',
+                }}
+              >
+                <User2 className="size-6" strokeWidth={2.5} />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/15 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl"></div>
               </div>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
-      </SidebarHeader>
+              <div className="grid flex-1 text-right leading-tight gap-0.5">
+                <span className="truncate font-bold text-sm text-foreground">د. {doctorName}</span>
+                <span className="truncate text-[11px] font-medium text-muted-foreground">
+                  {clinicName}
+                </span>
+              </div>
+            </div>
+
+
+
 
       <SidebarContent className="px-3 py-4">
         <SidebarGroup className="space-y-2">
@@ -189,29 +181,6 @@ export function AppSidebar({ activeTab, onTabChange, ...props }: AppSidebarProps
         </SidebarGroup>
       </SidebarContent>
 
-      <SidebarFooter className="border-t border-border/30 bg-gradient-to-r from-background via-accent/10 to-accent/5 px-5 py-4 mt-auto">
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <div className="flex items-center gap-3.5 p-3 rounded-xl hover:bg-accent/20 transition-all duration-300 ease-out cursor-pointer group">
-              <div 
-                className="flex aspect-square size-12 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-secondary text-white overflow-hidden relative ring-2 ring-primary/20"
-                style={{
-                  boxShadow: '0 4px 12px -2px hsl(var(--primary) / 0.3)',
-                }}
-              >
-                <User2 className="size-6" strokeWidth={2.5} />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/15 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl"></div>
-              </div>
-              <div className="grid flex-1 text-right leading-tight gap-0.5">
-                <span className="truncate font-bold text-sm text-foreground">د. {doctorName}</span>
-                <span className="truncate text-[11px] font-medium text-muted-foreground">
-                  {clinicName}
-                </span>
-              </div>
-            </div>
-          </SidebarMenuItem>
-        </SidebarMenu>
-      </SidebarFooter>
       <SidebarRail />
     </Sidebar>
   )

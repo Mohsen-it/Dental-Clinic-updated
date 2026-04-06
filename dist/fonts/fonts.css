@@ -70,23 +70,24 @@
   font-display: swap;
 }
 
-/* CSS Variables for consistent font usage */
+/* CSS Variables for consistent font usage - Tajawal as Primary */
 :root {
-  --font-arabic: 'ITF Qomra Arabic', 'Cairo', 'Amiri', Arial, sans-serif;
-  --font-arabic-display: 'ITF Qomra Arabic', 'Cairo', Arial, sans-serif;
-  --font-arabic-body: 'ITF Qomra Arabic', Arial, sans-serif;
+  --font-arabic: 'Tajawal', 'ITF Qomra Arabic', 'Cairo', 'Amiri', Arial, sans-serif;
+  --font-arabic-display: 'Tajawal', 'ITF Qomra Arabic', 'Cairo', Arial, sans-serif;
+  --font-arabic-body: 'Tajawal', 'ITF Qomra Arabic', Arial, sans-serif;
+  --font-primary: 'Tajawal', 'ITF Qomra Arabic', sans-serif;
 }
 
 /* Utility classes for Arabic text */
-.font-arabic {
+.font-arabic, .font-tajawal {
   font-family: var(--font-arabic);
 }
 
-.font-arabic-display {
+.font-arabic-display, .font-tajawal-display {
   font-family: var(--font-arabic-display);
 }
 
-.font-arabic-body {
+.font-arabic-body, .font-tajawal-body {
   font-family: var(--font-arabic-body);
 }
 

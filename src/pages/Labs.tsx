@@ -306,16 +306,16 @@ export default function Labs() {
   }
 
   return (
-    <div className="space-y-6 rtl-layout page-container" dir="rtl">
+    <div className="space-y-4 sm:space-y-6 rtl-layout page-container w-full overflow-x-hidden" dir="rtl">
       {/* Header */}
-      <div className="page-header" dir="rtl">
+      <div className="page-header flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4" dir="rtl">
         <div className="text-right">
-          <h1 className="text-3xl font-bold text-foreground">إدارة المخابر</h1>
-          <p className="text-muted-foreground">
+          <h1 className="text-2xl sm:text-3xl font-bold text-foreground">إدارة المخابر</h1>
+          <p className="text-sm sm:text-base text-muted-foreground">
             إدارة المخابر
           </p>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-wrap">
           <Button
             variant="outline"
             className="btn-modern btn-modern-ghost"
@@ -323,8 +323,8 @@ export default function Labs() {
             onClick={handleRefresh}
             disabled={labsLoading || ordersLoading}
           >
-            <RefreshCw className={`w-4 h-4 mr-2 ${(labsLoading || ordersLoading) ? 'animate-spin' : ''}`} />
-            تحديث
+            <RefreshCw className={`w-4 h-4 sm:mr-2 ${(labsLoading || ordersLoading) ? 'animate-spin' : ''}`} />
+            <span className="hidden sm:inline">تحديث</span>
           </Button>
           <Button
             variant="outline"
@@ -332,8 +332,8 @@ export default function Labs() {
             size="sm"
             onClick={handleExportCSV}
           >
-            <Download className="w-4 h-4 mr-2" />
-            تصدير اكسل
+            <Download className="w-4 h-4 sm:mr-2" />
+            <span className="hidden sm:inline">تصدير اكسل</span>
           </Button>
         </div>
       </div>
@@ -348,17 +348,19 @@ export default function Labs() {
       />
 
       {/* Statistics Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4" dir="rtl">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4" dir="rtl">
         {/* Total Orders */}
-        <Card className="interactive-card animate-fade-in-up">
+        <Card className="interactive-card animate-fade-in-up card-enhanced border-0 shadow-sm hover:shadow-md transition-all duration-300 group">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2" dir="rtl">
-            <CardTitle className="text-sm font-medium text-muted-foreground text-right">
+            <CardTitle className="text-xs sm:text-sm font-medium text-muted-foreground text-right line-clamp-1">
               {labOrderStats.timeFilter.preset === 'all' || (!labOrderStats.timeFilter.startDate && !labOrderStats.timeFilter.endDate) ? 'إجمالي الطلبات' : 'الطلبات المفلترة'}
             </CardTitle>
-            <Microscope className={`h-4 w-4 ${getIconStyles('blue')}`} />
+            <div className="p-2 rounded-xl bg-gradient-to-br from-sky-500/20 to-sky-600/10 group-hover:scale-110 transition-transform duration-300">
+              <Microscope className="h-4 w-4 text-sky-600 dark:text-sky-400" />
+            </div>
           </CardHeader>
           <CardContent className="text-right">
-            <div className="text-2xl font-bold text-foreground">
+            <div className="text-xl sm:text-2xl font-bold text-foreground">
               {labOrderStats.timeFilter.preset === 'all' || (!labOrderStats.timeFilter.startDate && !labOrderStats.timeFilter.endDate)
                 ? labOrders.length
                 : labOrderStats.filteredData.length}
@@ -369,9 +371,7 @@ export default function Labs() {
                 : 'طلبات في الفترة المحددة'}
             </p>
             {labOrderStats.trend && (
-              <div className={`text-xs flex items-center mt-1 ${
-                labOrderStats.trend.isPositive ? 'text-green-600' : 'text-red-600'
-              }`}>
+              <div className={`text-xs flex items-center mt-1 ${labOrderStats.trend.isPositive ? 'text-green-600' : 'text-red-600'}`}>
                 <span>{Math.abs(labOrderStats.trend.changePercent)}% من الفترة السابقة</span>
               </div>
             )}
@@ -379,15 +379,17 @@ export default function Labs() {
         </Card>
 
         {/* Total Cost */}
-        <Card className="interactive-card animate-fade-in-up">
+        <Card className="interactive-card animate-fade-in-up card-enhanced border-0 shadow-sm hover:shadow-md transition-all duration-300 group">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2" dir="rtl">
-            <CardTitle className="text-sm font-medium text-muted-foreground text-right">
+            <CardTitle className="text-xs sm:text-sm font-medium text-muted-foreground text-right line-clamp-1">
               {labOrderStats.timeFilter.preset === 'all' || (!labOrderStats.timeFilter.startDate && !labOrderStats.timeFilter.endDate) ? 'إجمالي التكلفة' : 'التكلفة المفلترة'}
             </CardTitle>
-            <DollarSign className={`h-4 w-4 ${getIconStyles('green')}`} />
+            <div className="p-2 rounded-xl bg-gradient-to-br from-emerald-500/20 to-emerald-600/10 group-hover:scale-110 transition-transform duration-300">
+              <DollarSign className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+            </div>
           </CardHeader>
           <CardContent className="text-right">
-            <div className="text-2xl font-bold text-foreground">
+            <div className="text-xl sm:text-2xl font-bold text-foreground">
               {formatCurrency(
                 labOrderStats.timeFilter.preset === 'all' || (!labOrderStats.timeFilter.startDate && !labOrderStats.timeFilter.endDate)
                   ? totalCost
@@ -400,9 +402,7 @@ export default function Labs() {
                 : 'تكلفة الطلبات في الفترة المحددة'}
             </p>
             {labOrderStats.trend && (
-              <div className={`text-xs flex items-center mt-1 ${
-                labOrderStats.trend.isPositive ? 'text-green-600' : 'text-red-600'
-              }`}>
+              <div className={`text-xs flex items-center mt-1 ${labOrderStats.trend.isPositive ? 'text-green-600' : 'text-red-600'}`}>
                 <span>{Math.abs(labOrderStats.trend.changePercent)}% من الفترة السابقة</span>
               </div>
             )}
@@ -410,15 +410,17 @@ export default function Labs() {
         </Card>
 
         {/* Total Payments */}
-        <Card className="interactive-card animate-fade-in-up">
+        <Card className="interactive-card animate-fade-in-up card-enhanced border-0 shadow-sm hover:shadow-md transition-all duration-300 group">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2" dir="rtl">
-            <CardTitle className="text-sm font-medium text-muted-foreground text-right">
+            <CardTitle className="text-xs sm:text-sm font-medium text-muted-foreground text-right line-clamp-1">
               {labOrderStats.timeFilter.preset === 'all' || (!labOrderStats.timeFilter.startDate && !labOrderStats.timeFilter.endDate) ? 'إجمالي الدفعات' : 'الدفعات المفلترة'}
             </CardTitle>
-            <CheckCircle className={`h-4 w-4 ${getIconStyles('purple')}`} />
+            <div className="p-2 rounded-xl bg-gradient-to-br from-purple-500/20 to-purple-600/10 group-hover:scale-110 transition-transform duration-300">
+              <CheckCircle className="h-4 w-4 text-purple-600 dark:text-purple-400" />
+            </div>
           </CardHeader>
           <CardContent className="text-right">
-            <div className="text-2xl font-bold text-foreground">
+            <div className="text-xl sm:text-2xl font-bold text-foreground">
               {formatCurrency(
                 labOrderStats.timeFilter.preset === 'all' || (!labOrderStats.timeFilter.startDate && !labOrderStats.timeFilter.endDate)
                   ? totalPaid
@@ -434,15 +436,17 @@ export default function Labs() {
         </Card>
 
         {/* Remaining Payments */}
-        <Card className="interactive-card animate-fade-in-up">
+        <Card className="interactive-card animate-fade-in-up card-enhanced border-0 shadow-sm hover:shadow-md transition-all duration-300 group">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2" dir="rtl">
-            <CardTitle className="text-sm font-medium text-muted-foreground text-right">
+            <CardTitle className="text-xs sm:text-sm font-medium text-muted-foreground text-right line-clamp-1">
               {labOrderStats.timeFilter.preset === 'all' || (!labOrderStats.timeFilter.startDate && !labOrderStats.timeFilter.endDate) ? 'الدفعات المتبقية' : 'المتبقية المفلترة'}
             </CardTitle>
-            <AlertTriangle className={`h-4 w-4 ${getIconStyles('orange')}`} />
+            <div className="p-2 rounded-xl bg-gradient-to-br from-amber-500/20 to-amber-600/10 group-hover:scale-110 transition-transform duration-300">
+              <AlertTriangle className="h-4 w-4 text-amber-600 dark:text-amber-400" />
+            </div>
           </CardHeader>
           <CardContent className="text-right">
-            <div className="text-2xl font-bold text-foreground">
+            <div className="text-xl sm:text-2xl font-bold text-foreground">
               {formatCurrency(
                 labOrderStats.timeFilter.preset === 'all' || (!labOrderStats.timeFilter.startDate && !labOrderStats.timeFilter.endDate)
                   ? totalRemaining
@@ -461,15 +465,17 @@ export default function Labs() {
         </Card>
 
         {/* Pending Orders */}
-        <Card className="interactive-card animate-fade-in-up">
+        <Card className="interactive-card animate-fade-in-up card-enhanced border-0 shadow-sm hover:shadow-md transition-all duration-300 group">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2" dir="rtl">
-            <CardTitle className="text-sm font-medium text-muted-foreground text-right">
+            <CardTitle className="text-xs sm:text-sm font-medium text-muted-foreground text-right line-clamp-1">
               {labOrderStats.timeFilter.preset === 'all' || (!labOrderStats.timeFilter.startDate && !labOrderStats.timeFilter.endDate) ? 'طلبات معلقة' : 'طلبات معلقة مفلترة'}
             </CardTitle>
-            <Clock className={`h-4 w-4 ${getIconStyles('yellow')}`} />
+            <div className="p-2 rounded-xl bg-gradient-to-br from-yellow-500/20 to-yellow-600/10 group-hover:scale-110 transition-transform duration-300">
+              <Clock className="h-4 w-4 text-yellow-600 dark:text-yellow-400" />
+            </div>
           </CardHeader>
           <CardContent className="text-right">
-            <div className="text-2xl font-bold text-foreground">
+            <div className="text-xl sm:text-2xl font-bold text-foreground">
               {labOrderStats.timeFilter.preset === 'all' || (!labOrderStats.timeFilter.startDate && !labOrderStats.timeFilter.endDate)
                 ? pendingOrders
                 : labOrderStats.filteredData.filter(order => order.status === 'معلق').length}
@@ -483,15 +489,17 @@ export default function Labs() {
         </Card>
 
         {/* Completed Orders */}
-        <Card className="interactive-card animate-fade-in-up">
+        <Card className="interactive-card animate-fade-in-up card-enhanced border-0 shadow-sm hover:shadow-md transition-all duration-300 group">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2" dir="rtl">
-            <CardTitle className="text-sm font-medium text-muted-foreground text-right">
+            <CardTitle className="text-xs sm:text-sm font-medium text-muted-foreground text-right line-clamp-1">
               {labOrderStats.timeFilter.preset === 'all' || (!labOrderStats.timeFilter.startDate && !labOrderStats.timeFilter.endDate) ? 'طلبات مكتملة' : 'طلبات مكتملة مفلترة'}
             </CardTitle>
-            <CheckCircle className={`h-4 w-4 ${getIconStyles('emerald')}`} />
+            <div className="p-2 rounded-xl bg-gradient-to-br from-green-500/20 to-green-600/10 group-hover:scale-110 transition-transform duration-300">
+              <CheckCircle className="h-4 w-4 text-green-600 dark:text-green-400" />
+            </div>
           </CardHeader>
           <CardContent className="text-right">
-            <div className="text-2xl font-bold text-foreground">
+            <div className="text-xl sm:text-2xl font-bold text-foreground">
               {labOrderStats.timeFilter.preset === 'all' || (!labOrderStats.timeFilter.startDate && !labOrderStats.timeFilter.endDate)
                 ? completedOrders
                 : labOrderStats.filteredData.filter(order => order.status === 'مكتمل').length}
