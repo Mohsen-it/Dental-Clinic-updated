@@ -186,16 +186,16 @@ export default function Payments() {
 
 
   return (
-    <div className="space-y-6 rtl-layout page-container" dir="rtl">
+    <div className="space-y-4 sm:space-y-6 rtl-layout page-container w-full overflow-x-hidden" dir="rtl">
       {/* Header */}
-      <div className="page-header">
+      <div className="page-header flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
         <div className="animate-fade-in-up">
-          <h1 className="text-3xl font-bold text-foreground">إدارة المدفوعات</h1>
-          <p className="text-muted-foreground mt-2">
+          <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-foreground">إدارة المدفوعات</h1>
+          <p className="text-sm sm:text-base text-muted-foreground mt-1 sm:mt-2">
             تتبع المدفوعات والفواتير والسجلات المالية
           </p>
         </div>
-        <div className="flex items-center gap-3 animate-fade-in-up delay-100">
+        <div className="flex items-center gap-2 sm:gap-3 animate-fade-in-up delay-100 flex-wrap w-full sm:w-auto">
           <Button
             variant="outline"
             onClick={async () => {
@@ -298,28 +298,30 @@ export default function Payments() {
       </div>
 
       {/* Statistics Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 stagger-children">
-        <Card className={getCardStyles("green")}>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 stagger-children">
+        <Card className="interactive-card animate-fade-in-up">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">
+            <CardTitle className="text-xs sm:text-sm font-medium text-muted-foreground">
               {paymentStats.timeFilter.preset === 'all' || (!paymentStats.timeFilter.startDate && !paymentStats.timeFilter.endDate) ? 'إجمالي الإيرادات' : 'الإيرادات المفلترة'}
             </CardTitle>
-            <DollarSign className={`h-4 w-4 ${getIconStyles("green")}`} />
+            <div className="p-1.5 sm:p-2 rounded-lg sm:rounded-xl bg-green-100 dark:bg-green-900/30">
+              <DollarSign className="h-4 w-4 sm:h-5 sm:w-5 text-green-600 dark:text-green-400" />
+            </div>
           </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-foreground">
+          <CardContent className="stats-content">
+            <div className="text-xl sm:text-2xl font-bold text-foreground">
               {paymentStats.timeFilter.preset === 'all' || (!paymentStats.timeFilter.startDate && !paymentStats.timeFilter.endDate)
                 ? formatCurrency(totalRevenue)
                 : formatCurrency(paymentStats.financialStats.totalRevenue)}
             </div>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-muted-foreground mt-1">
               {paymentStats.timeFilter.preset === 'all' || (!paymentStats.timeFilter.startDate && !paymentStats.timeFilter.endDate)
                 ? 'من المدفوعات المكتملة والجزئية'
                 : 'من المدفوعات المكتملة والجزئية في الفترة المحددة'}
             </p>
             {paymentStats.trend && (
               <div className={`text-xs flex items-center mt-1 ${
-                paymentStats.trend.isPositive ? 'text-green-600' : 'text-red-600'
+                paymentStats.trend.isPositive ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'
               }`}>
                 <TrendingUp className={`w-3 h-3 ml-1 ${paymentStats.trend.isPositive ? '' : 'rotate-180'}`} />
                 <span>{Math.abs(paymentStats.trend.changePercent)}% من الفترة السابقة</span>
@@ -328,20 +330,22 @@ export default function Payments() {
           </CardContent>
         </Card>
 
-        <Card className={getCardStyles("red")}>
+        <Card className="interactive-card animate-fade-in-up delay-100">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">
+            <CardTitle className="text-xs sm:text-sm font-medium text-muted-foreground">
               {paymentStats.timeFilter.preset === 'all' || (!paymentStats.timeFilter.startDate && !paymentStats.timeFilter.endDate) ? 'المبالغ غير المدفوعة' : 'المبالغ غير المدفوعة المفلترة'}
             </CardTitle>
-            <AlertTriangle className={`h-4 w-4 ${getIconStyles("red")}`} />
+            <div className="p-1.5 sm:p-2 rounded-lg sm:rounded-xl bg-red-100 dark:bg-red-900/30">
+              <AlertTriangle className="h-4 w-4 sm:h-5 sm:w-5 text-red-600 dark:text-red-400" />
+            </div>
           </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-foreground">
+          <CardContent className="stats-content">
+            <div className="text-xl sm:text-2xl font-bold text-foreground">
               {paymentStats.timeFilter.preset === 'all' || (!paymentStats.timeFilter.startDate && !paymentStats.timeFilter.endDate)
                 ? formatCurrency(pendingAmount)
                 : formatCurrency(paymentStats.financialStats.pendingAmount)}
             </div>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-muted-foreground mt-1">
               {paymentStats.timeFilter.preset === 'all' || (!paymentStats.timeFilter.startDate && !paymentStats.timeFilter.endDate)
                 ? 'من العلاجات والمواعيد المعلقة'
                 : 'من العلاجات والمواعيد المعلقة في الفترة المحددة'}
@@ -349,15 +353,17 @@ export default function Payments() {
           </CardContent>
         </Card>
 
-        <Card className={getCardStyles("yellow")}>
+        <Card className="interactive-card animate-fade-in-up delay-200">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">
+            <CardTitle className="text-xs sm:text-sm font-medium text-muted-foreground">
               {paymentStats.timeFilter.preset === 'all' || (!paymentStats.timeFilter.startDate && !paymentStats.timeFilter.endDate) ? 'المبالغ المتبقية' : 'المبالغ المتبقية المفلترة'}
             </CardTitle>
-            <Clock className={`h-4 w-4 ${getIconStyles("yellow")}`} />
+            <div className="p-1.5 sm:p-2 rounded-lg sm:rounded-xl bg-yellow-100 dark:bg-yellow-900/30">
+              <Clock className="h-4 w-4 sm:h-5 sm:w-5 text-yellow-600 dark:text-yellow-400" />
+            </div>
           </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-foreground">
+          <CardContent className="stats-content">
+            <div className="text-xl sm:text-2xl font-bold text-foreground">
               {(() => {
                 // حساب المبالغ المتبقية للبيانات المفلترة
                 let dataToCalculate = [...payments]
@@ -462,7 +468,7 @@ export default function Payments() {
                 return isFiltered ? formatCurrency(filteredRemainingBalance) : formatCurrency(totalRemainingBalance)
               })()}
             </div>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-muted-foreground mt-1">
               {(() => {
                 // حساب عدد المدفوعات الجزئية المفلترة
                 let dataToCalculate = [...payments]
@@ -511,15 +517,17 @@ export default function Payments() {
           </CardContent>
         </Card>
 
-        <Card className={getCardStyles("purple")}>
+        <Card className="interactive-card animate-fade-in-up delay-300">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">
+            <CardTitle className="text-xs sm:text-sm font-medium text-muted-foreground">
               {paymentStats.timeFilter.preset === 'all' || (!paymentStats.timeFilter.startDate && !paymentStats.timeFilter.endDate) ? 'معدل الإنجاز' : 'معدل الإنجاز المفلتر'}
             </CardTitle>
-            <TrendingUp className={`h-4 w-4 ${getIconStyles("purple")}`} />
+            <div className="p-1.5 sm:p-2 rounded-lg sm:rounded-xl bg-purple-100 dark:bg-purple-900/30">
+              <TrendingUp className="h-4 w-4 sm:h-5 sm:w-5 text-purple-600 dark:text-purple-400" />
+            </div>
           </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-foreground">
+          <CardContent className="stats-content">
+            <div className="text-xl sm:text-2xl font-bold text-foreground">
               {(() => {
                 // حساب معدل الإنجاز (المدفوعات المكتملة / إجمالي المدفوعات)
                 let dataToCalculate = [...payments]
@@ -543,7 +551,7 @@ export default function Payments() {
                 return `${successRate}%`
               })()}
             </div>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-muted-foreground mt-1">
               {(() => {
                 let dataToCalculate = [...payments]
 

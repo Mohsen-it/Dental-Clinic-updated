@@ -42,7 +42,7 @@ export default function QuickShortcutHint({ className }: QuickShortcutHintProps)
   return (
     <div
       className={cn(
-        "flex items-center gap-2 px-3 py-1.5 rounded-lg border transition-all duration-300",
+        "hidden xs:flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg border transition-all duration-300",
         isDarkMode
           ? "bg-gradient-to-r from-blue-950/30 to-indigo-950/30 border-blue-800/50 shadow-lg shadow-blue-900/20"
           : "bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200 shadow-sm",
@@ -52,13 +52,13 @@ export default function QuickShortcutHint({ className }: QuickShortcutHintProps)
       onMouseLeave={() => setIsPaused(false)}
     >
       <Keyboard className={`w-3 h-3 ${isDarkMode ? 'text-blue-400' : 'text-blue-600'}`} />
-      <span className={`text-xs font-medium ${isDarkMode ? 'text-blue-300' : 'text-blue-700'}`}>
+      <span className={`text-[10px] sm:text-xs font-medium hidden sm:inline ${isDarkMode ? 'text-blue-300' : 'text-blue-700'}`}>
         نصيحة:
       </span>
       <Badge
         variant="secondary"
         className={cn(
-          "text-xs px-1.5 py-0.5 font-mono",
+          "text-[9px] sm:text-xs px-1 py-0.5 font-mono",
           isDarkMode
             ? "bg-blue-900/50 text-blue-200 border-blue-700/50"
             : "bg-blue-100 text-blue-800 border-blue-300"
@@ -66,7 +66,7 @@ export default function QuickShortcutHint({ className }: QuickShortcutHintProps)
       >
         {hint.key}
       </Badge>
-      <span className={`text-xs ${isDarkMode ? 'text-blue-300' : 'text-blue-700'}`}>
+      <span className={`text-[10px] sm:text-xs hidden sm:inline ${isDarkMode ? 'text-blue-300' : 'text-blue-700'}`}>
         {hint.description}
       </span>
       <Button
@@ -74,7 +74,7 @@ export default function QuickShortcutHint({ className }: QuickShortcutHintProps)
         size="sm"
         onClick={() => setIsVisible(false)}
         className={cn(
-          "h-4 w-4 p-0 ml-1 transition-colors",
+          "h-5 sm:h-6 w-5 sm:w-6 p-0 ml-0.5 sm:ml-1 transition-colors",
           isDarkMode
             ? "text-blue-400 hover:text-blue-200 hover:bg-blue-900/30"
             : "text-blue-500 hover:text-blue-700 hover:bg-blue-100"

@@ -41,9 +41,17 @@ export default {
     // Common utility classes
     'transition-all', 'duration-200', 'hover:shadow-lg', 'border', 'rounded-lg'
   ],
-  darkMode: ['class', "class"], // Enable class-based dark mode
+  darkMode: ['class', "class"],
   theme: {
-  	extend: {
+    screens: {
+      'xs': '375px',
+      'sm': '640px',
+      'md': '768px',
+      'lg': '1024px',
+      'xl': '1280px',
+      '2xl': '1536px',
+    },
+    extend: {
   		colors: {
   			border: 'hsl(var(--border))',
   			input: 'hsl(var(--input))',

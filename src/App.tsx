@@ -391,42 +391,38 @@ function AppContent() {
   }
 
   return (
-    <SidebarProvider>
+    <SidebarProvider defaultOpen={true}>
         <AppSidebar activeTab={activeTab} onTabChange={setActiveTab} />
         <SidebarInset>
-          <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border/40 rtl-layout">
-            <div className="flex items-center gap-2 px-4">
+          <header className="flex h-12 sm:h-14 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border/40 rtl-layout">
+            <div className="flex items-center gap-1 sm:gap-2 px-1 sm:px-2">
+              <SidebarTrigger className="h-8 w-8 sm:h-9 sm:w-9" />
               <Breadcrumb>
                 <BreadcrumbList className="flex-rtl">
-                  <BreadcrumbItem className="hidden md:block">
-                    <BreadcrumbLink href="#" className="text-muted-foreground hover:text-foreground transition-colors duration-200">
-                      🦷 نظام إدارة العيادة السنية
+                  <BreadcrumbItem className="hidden lg:block">
+                    <BreadcrumbLink href="#" className="text-xs text-muted-foreground hover:text-foreground transition-colors duration-200">
+                      🦷 العيادة
                     </BreadcrumbLink>
                   </BreadcrumbItem>
-                  <BreadcrumbSeparator className="hidden md:block" />
+                  <BreadcrumbSeparator className="hidden lg:block" />
                   <BreadcrumbItem>
-                    <BreadcrumbPage className="font-semibold text-sky-600 dark:text-sky-400">{getCurrentPageTitle()}</BreadcrumbPage>
+                    <BreadcrumbPage className="font-semibold text-xs sm:text-sm text-sky-600 dark:text-sky-400">{getCurrentPageTitle()}</BreadcrumbPage>
                   </BreadcrumbItem>
                 </BreadcrumbList>
               </Breadcrumb>
             </div>
-            <div className="ml-auto-rtl flex items-center gap-3 px-4 space-x-3-rtl">
-              <SidebarTrigger />
-              <Separator orientation="vertical" className="mx-2 h-4" />
-
-              <QuickShortcutHint />
-              <ThemeToggle />
-              <div className="text-sm text-muted-foreground bg-accent/30 px-3 py-1 rounded-full">
+            <div className="ml-auto-rtl flex items-center gap-1 px-1 sm:px-2">
+              <QuickShortcutHint className="hidden xs:block" />
+              <ThemeToggle className="h-8 w-8 sm:h-9 sm:w-9" />
+              <div className="hidden md:block text-xs text-muted-foreground bg-accent/30 px-2 py-1 rounded-full">
                 <LiveDateTime />
               </div>
             </div>
           </header>
-          <div className="flex flex-1 flex-col gap-4 p-10 pt-4 max-w-full overflow-hidden relative rtl-layout">
+          <div className="flex flex-1 flex-col gap-2 sm:gap-3 p-2 sm:p-3 md:p-4 pt-1 sm:pt-2 max-w-full overflow-hidden relative rtl-layout">
             <div className="w-full max-w-none content-wrapper">
               {renderContent()}
             </div>
-
-
           </div>
         </SidebarInset>
 

@@ -532,15 +532,15 @@ export default function Appointments() {
   }
 
   return (
-    <div className="space-y-6 rtl-layout page-container">
-      <div className="page-header">
+    <div className="space-y-4 sm:space-y-6 rtl-layout page-container w-full overflow-x-hidden">
+      <div className="page-header flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
         <div className="animate-fade-in-up">
-          <h1 className="text-3xl font-bold text-foreground">إدارة المواعيد</h1>
-          <p className="text-muted-foreground mt-2">
+          <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-foreground">إدارة المواعيد</h1>
+          <p className="text-sm sm:text-base text-muted-foreground mt-1 sm:mt-2">
             جدولة ومتابعة مواعيد المرضى
           </p>
         </div>
-        <div className="flex items-center gap-3 animate-fade-in-up delay-100">
+        <div className="flex items-center gap-2 sm:gap-3 animate-fade-in-up delay-100 flex-wrap">
           <Button
             variant="outline"
             onClick={async () => {
@@ -557,41 +557,42 @@ export default function Appointments() {
                 notify.exportError('فشل في تصدير بيانات المواعيد')
               }
             }}
-            className="btn-modern btn-modern-ghost"
+            className="btn-modern btn-modern-ghost text-sm"
           >
             <Download className="w-4 h-4" />
-            تصدير
+            <span className="hidden sm:inline ml-1">تصدير</span>
           </Button>
           <Button onClick={() => {
             setSelectedAppointment(null)
             setShowAddDialog(true)
-          }} className="btn-modern btn-modern-primary">
+          }} className="btn-modern btn-modern-primary text-sm">
             <Plus className="w-4 h-4" />
-            موعد جديد
+            <span className="hidden sm:inline ml-1">موعد جديد</span>
+            <span className="sm:hidden">إضافة</span>
           </Button>
         </div>
       </div>
 
       {/* Search and Filters */}
       <Card className="animate-fade-in-up delay-200">
-        <CardContent className="pt-6">
-          <div className="space-y-4" dir="rtl">
-            <div className="flex items-center gap-4 flex-wrap" dir="rtl">
+        <CardContent className="pt-4 sm:pt-6">
+          <div className="space-y-3 sm:space-y-4" dir="rtl">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 flex-wrap" dir="rtl">
               <div className="relative flex-1 min-w-[200px]">
-                <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
+                <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4 sm:w-5 sm:h-5" />
                 <Input
                   placeholder="البحث في المواعيد..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="input-modern pr-12 text-right"
+                  className="input-modern pr-10 sm:pr-12 text-right text-sm"
                   dir="rtl"
                 />
               </div>
               <Collapsible open={showFilters} onOpenChange={setShowFilters}>
                 <CollapsibleTrigger asChild>
-                  <Button variant="outline" size="sm" className="btn-modern btn-modern-ghost">
+                  <Button variant="outline" size="sm" className="btn-modern btn-modern-ghost text-sm w-full sm:w-auto">
                     <Filter className="w-4 h-4" />
-                    تصفية
+                    <span className="hidden sm:inline ml-1">تصفية</span>
                     {(statusFilter !== 'all' || patientFilter !== 'all' || dateRangeFilter.start || dateRangeFilter.end) && (
                       <span className="w-2 h-2 bg-primary rounded-full"></span>
                     )}
@@ -599,17 +600,17 @@ export default function Appointments() {
                 </CollapsibleTrigger>
               </Collapsible>
               {(searchQuery || statusFilter !== 'all' || patientFilter !== 'all' || dateRangeFilter.start || dateRangeFilter.end) && (
-                <Button variant="ghost" size="sm" onClick={clearAllFilters} className="btn-modern btn-modern-ghost">
+                <Button variant="ghost" size="sm" onClick={clearAllFilters} className="btn-modern btn-modern-ghost text-sm w-full sm:w-auto">
                   <X className="w-4 h-4" />
-                  مسح الكل
+                  <span className="hidden sm:inline">مسح الكل</span>
                 </Button>
               )}
             </div>
 
             {/* Advanced Filters */}
             <Collapsible open={showFilters} onOpenChange={setShowFilters}>
-              <CollapsibleContent className="space-y-4" dir="rtl">
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-4 p-4 bg-muted/50 rounded-lg" dir="rtl">
+              <CollapsibleContent className="space-y-3 sm:space-y-4" dir="rtl">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 p-3 sm:p-4 bg-muted/50 rounded-lg" dir="rtl">
                   {/* Status Filter */}
                   <div className="space-y-2 text-right">
                     <label className="text-sm font-medium">حالة الموعد</label>

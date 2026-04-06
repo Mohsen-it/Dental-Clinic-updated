@@ -104,19 +104,19 @@ export default function QuickAccessDashboard({
   }
 
   return (
-    <div className="space-y-6 rtl-layout">
+    <div className="space-y-4 sm:space-y-6 rtl-layout">
       {/* Quick Stats */}
-      <div className="dashboard-grid-rtl">
+      <div className="dashboard-grid">
         {/* Total Patients */}
-        <Card className="hover:shadow-md transition-shadow cursor-pointer stats-card-rtl" onClick={onNavigateToPatients}>
-          <CardContent className="pt-6 stats-content">
+        <Card className="hover:shadow-md transition-shadow cursor-pointer" onClick={onNavigateToPatients}>
+          <CardContent className="p-3 sm:p-6">
             <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-muted-foreground">إجمالي المرضى</p>
-                <p className="text-2xl font-bold">{quickAccessData.quickStats.totalPatients}</p>
+              <div className="min-w-0">
+                <p className="text-xs sm:text-sm font-medium text-muted-foreground">إجمالي المرضى</p>
+                <p className="text-xl sm:text-2xl font-bold truncate">{quickAccessData.quickStats.totalPatients}</p>
               </div>
-              <div className="p-2 bg-blue-100 rounded-lg stats-icon">
-                <Users className="w-6 h-6 text-blue-600" />
+              <div className="p-1.5 sm:p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex-shrink-0">
+                <Users className="w-4 h-4 sm:w-6 sm:h-6 text-blue-600 dark:text-blue-400" />
               </div>
             </div>
           </CardContent>
@@ -124,14 +124,14 @@ export default function QuickAccessDashboard({
 
         {/* Today Appointments */}
         <Card className="hover:shadow-md transition-shadow cursor-pointer" onClick={onNavigateToAppointments}>
-          <CardContent className="pt-6">
+          <CardContent className="p-3 sm:p-6">
             <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-muted-foreground">مواعيد اليوم</p>
-                <p className="text-2xl font-bold">{quickAccessData.quickStats.todayAppointments}</p>
+              <div className="min-w-0">
+                <p className="text-xs sm:text-sm font-medium text-muted-foreground">مواعيد اليوم</p>
+                <p className="text-xl sm:text-2xl font-bold truncate">{quickAccessData.quickStats.todayAppointments}</p>
               </div>
-              <div className="p-2 bg-purple-100 rounded-lg">
-                <Calendar className="w-6 h-6 text-purple-600" />
+              <div className="p-1.5 sm:p-2 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex-shrink-0">
+                <Calendar className="w-4 h-4 sm:w-6 sm:h-6 text-purple-600 dark:text-purple-400" />
               </div>
             </div>
           </CardContent>
@@ -139,33 +139,18 @@ export default function QuickAccessDashboard({
 
         {/* Pending Payments */}
         <Card className="hover:shadow-md transition-shadow cursor-pointer" onClick={onNavigateToPayments}>
-          <CardContent className="pt-6">
+          <CardContent className="p-3 sm:p-6">
             <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-muted-foreground">دفعات معلقة</p>
-                <p className="text-2xl font-bold">{quickAccessData.quickStats.pendingPayments}</p>
+              <div className="min-w-0">
+                <p className="text-xs sm:text-sm font-medium text-muted-foreground">دفعات معلقة</p>
+                <p className="text-xl sm:text-2xl font-bold truncate">{quickAccessData.quickStats.pendingPayments}</p>
               </div>
-              <div className="p-2 bg-yellow-100 rounded-lg">
-                <DollarSign className="w-6 h-6 text-yellow-600" />
+              <div className="p-1.5 sm:p-2 bg-yellow-100 dark:bg-yellow-900/30 rounded-lg flex-shrink-0">
+                <DollarSign className="w-4 h-4 sm:w-6 sm:h-6 text-yellow-600 dark:text-yellow-400" />
               </div>
             </div>
           </CardContent>
         </Card>
-
-        {/* Urgent Alerts */}
-        {/* <Card className="hover:shadow-md transition-shadow">
-          <CardContent className="pt-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-muted-foreground">تنبيهات عاجلة</p>
-                <p className="text-2xl font-bold">{quickAccessData.quickStats.urgentAlerts}</p>
-              </div>
-              <div className="p-2 bg-red-100 rounded-lg">
-                <AlertTriangle className="w-6 h-6 text-red-600" />
-              </div>
-            </div>
-          </CardContent>
-        </Card> */}
       </div>
 
       {/* Quick Actions */}
@@ -184,11 +169,12 @@ export default function QuickAccessDashboard({
                   console.log('🏥 Add Patient button clicked!')
                   onAddPatient?.()
                 }}
-                className="h-12 justify-between hover:shadow-lg transition-all duration-200 active:scale-95"
+                className="h-10 sm:h-12 justify-between hover:shadow-lg transition-all duration-200 active:scale-95 text-xs sm:text-sm"
               >
                 <div className="flex items-center">
-                  <Users className="w-4 h-4 mr-2" />
-                  إضافة مريض جديد
+                  <Users className="w-3 h-3 sm:w-4 sm:h-4 ml-1 sm:mr-2" />
+                  <span className="hidden sm:inline">إضافة مريض جديد</span>
+                  <span className="sm:hidden">إضافة مريض</span>
                 </div>
                 <KeyboardShortcut shortcut="A" size="sm" />
               </Button>
@@ -201,11 +187,12 @@ export default function QuickAccessDashboard({
                   onAddAppointment?.()
                 }}
                 variant="outline"
-                className="h-12 justify-between hover:shadow-lg transition-all duration-200 active:scale-95"
+                className="h-10 sm:h-12 justify-between hover:shadow-lg transition-all duration-200 active:scale-95 text-xs sm:text-sm"
               >
                 <div className="flex items-center">
-                  <Calendar className="w-4 h-4 mr-2" />
-                  حجز موعد جديد
+                  <Calendar className="w-3 h-3 sm:w-4 sm:h-4 ml-1 sm:mr-2" />
+                  <span className="hidden sm:inline">حجز موعد جديد</span>
+                  <span className="sm:hidden">موعد جديد</span>
                 </div>
                 <KeyboardShortcut shortcut="S" size="sm" />
               </Button>
@@ -218,11 +205,12 @@ export default function QuickAccessDashboard({
                   onAddPayment?.()
                 }}
                 variant="outline"
-                className="h-12 justify-between hover:shadow-lg transition-all duration-200 active:scale-95"
+                className="h-10 sm:h-12 justify-between hover:shadow-lg transition-all duration-200 active:scale-95 text-xs sm:text-sm"
               >
                 <div className="flex items-center">
-                  <DollarSign className="w-4 h-4 mr-2" />
-                  تسجيل دفعة جديدة
+                  <DollarSign className="w-3 h-3 sm:w-4 sm:h-4 ml-1 sm:mr-2" />
+                  <span className="hidden sm:inline">تسجيل دفعة جديدة</span>
+                  <span className="sm:hidden">دفعة جديدة</span>
                 </div>
                 <KeyboardShortcut shortcut="D" size="sm" />
               </Button>

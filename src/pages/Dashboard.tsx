@@ -252,39 +252,39 @@ export default function Dashboard({ onAddPatient, onAddAppointment }: DashboardP
   const todayAppointments = getAppointmentsForDate(new Date())
 
   return (
-    <div className="space-y-6 rtl-layout page-container">
+    <div className="space-y-4 sm:space-y-6 rtl-layout page-container">
       {/* Welcome Section */}
-      <div className="flex items-center justify-between flex-wrap gap-4 page-header">
-        <div>
-          <div className="flex items-center gap-3 mb-2">
-            <h1 className="text-3xl font-bold text-foreground animate-fade-in-up">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 page-header">
+        <div className="w-full">
+          <div className="flex items-center gap-2 sm:gap-3 mb-1 sm:mb-2">
+            <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-foreground animate-fade-in-up">
               مرحباً بك في {clinicName}
             </h1>
           </div>
-          <p className="text-muted-foreground animate-fade-in-up delay-100">
+          <p className="text-xs sm:text-sm text-muted-foreground animate-fade-in-up delay-100">
             إليك ما يحدث في عيادتك - تحديث تلقائي في الوقت الفعلي
           </p>
         </div>
-        <div className="flex gap-3">
-          <Button onClick={onAddAppointment} className="btn-modern btn-modern-primary">
+        <div className="flex gap-2 sm:gap-3 w-full sm:w-auto">
+          <Button onClick={onAddAppointment} className="btn-modern btn-modern-primary flex-1 sm:flex-none text-sm">
             <Plus className="w-4 h-4" />
-            موعد جديد
+            <span className="sm:hidden lg:inline">موعد جديد</span>
           </Button>
-          <Button variant="outline" onClick={onAddPatient} className="btn-modern btn-modern-ghost">
+          <Button variant="outline" onClick={onAddPatient} className="btn-modern btn-modern-ghost flex-1 sm:flex-none text-sm">
             <Plus className="w-4 h-4" />
-            مريض جديد
+            <span className="sm:hidden lg:inline">مريض جديد</span>
           </Button>
         </div>
       </div>
 
       {/* Time Filter Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 animate-fade-in-up delay-200">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 animate-fade-in-up delay-200">
         <TimeFilter
           value={appointmentStats.timeFilter}
           onChange={appointmentStats.handleFilterChange}
           onClear={appointmentStats.resetFilter}
           title="فلترة زمنية - المواعيد"
-          className="lg:col-span-1"
+          className="md:col-span-1"
           defaultOpen={false}
         />
         <TimeFilter
@@ -292,7 +292,7 @@ export default function Dashboard({ onAddPatient, onAddAppointment }: DashboardP
           onChange={paymentStats.handleFilterChange}
           onClear={paymentStats.resetFilter}
           title="فلترة زمنية - المدفوعات"
-          className="lg:col-span-1"
+          className="md:col-span-1"
           defaultOpen={false}
         />
       </div>
@@ -300,16 +300,16 @@ export default function Dashboard({ onAddPatient, onAddAppointment }: DashboardP
       {/* Stats Cards */}
       <div className="dashboard-grid stagger-children">
         <Card className="interactive-card animate-fade-in-up">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
-            <CardTitle className="text-sm font-medium text-muted-foreground">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-xs sm:text-sm font-medium text-muted-foreground">
               إجمالي المرضى
             </CardTitle>
-            <div className="p-2 rounded-xl bg-blue-100 dark:bg-blue-900/30">
-              <Users className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+            <div className="p-1.5 sm:p-2 rounded-lg sm:rounded-xl bg-blue-100 dark:bg-blue-900/30">
+              <Users className="h-4 w-4 sm:h-5 sm:w-5 text-blue-600 dark:text-blue-400" />
             </div>
           </CardHeader>
           <CardContent className="stats-content">
-            <div className="text-3xl font-bold text-foreground">
+            <div className="text-2xl sm:text-3xl font-bold text-foreground">
               {patients.length}
             </div>
             <p className="text-xs text-muted-foreground mt-1">
@@ -319,16 +319,16 @@ export default function Dashboard({ onAddPatient, onAddAppointment }: DashboardP
         </Card>
 
         <Card className="interactive-card animate-fade-in-up delay-100">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
-            <CardTitle className="text-sm font-medium text-muted-foreground">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-xs sm:text-sm font-medium text-muted-foreground">
               {appointmentStats.timeFilter.preset === 'all' || (!appointmentStats.timeFilter.startDate && !appointmentStats.timeFilter.endDate) ? 'إجمالي المواعيد' : 'المواعيد المفلترة'}
             </CardTitle>
-            <div className="p-2 rounded-xl bg-purple-100 dark:bg-purple-900/30">
-              <Calendar className="h-5 w-5 text-purple-600 dark:text-purple-400" />
+            <div className="p-1.5 sm:p-2 rounded-lg sm:rounded-xl bg-purple-100 dark:bg-purple-900/30">
+              <Calendar className="h-4 w-4 sm:h-5 sm:w-5 text-purple-600 dark:text-purple-400" />
             </div>
           </CardHeader>
           <CardContent className="stats-content">
-            <div className="text-3xl font-bold text-foreground">
+            <div className="text-2xl sm:text-3xl font-bold text-foreground">
               {appointmentStats.timeFilter.preset === 'all' || (!appointmentStats.timeFilter.startDate && !appointmentStats.timeFilter.endDate)
                 ? appointments.length
                 : appointmentStats.filteredData.length}
@@ -348,16 +348,16 @@ export default function Dashboard({ onAddPatient, onAddAppointment }: DashboardP
         </Card>
 
         <Card className="interactive-card animate-fade-in-up delay-200">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
-            <CardTitle className="text-sm font-medium text-muted-foreground">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-xs sm:text-sm font-medium text-muted-foreground">
               {appointmentStats.timeFilter.preset === 'all' || (!appointmentStats.timeFilter.startDate && !appointmentStats.timeFilter.endDate) ? 'المواعيد المكتملة' : 'المواعيد المكتملة المفلترة'}
             </CardTitle>
-            <div className="p-2 rounded-xl bg-emerald-100 dark:bg-emerald-900/30">
-              <TrendingUp className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
+            <div className="p-1.5 sm:p-2 rounded-lg sm:rounded-xl bg-emerald-100 dark:bg-emerald-900/30">
+              <TrendingUp className="h-4 w-4 sm:h-5 sm:w-5 text-emerald-600 dark:text-emerald-400" />
             </div>
           </CardHeader>
           <CardContent className="stats-content">
-            <div className="text-3xl font-bold text-foreground">
+            <div className="text-2xl sm:text-3xl font-bold text-foreground">
               {appointmentStats.timeFilter.preset === 'all' || (!appointmentStats.timeFilter.startDate && !appointmentStats.timeFilter.endDate)
                 ? appointments.filter(a => a.status === 'completed').length
                 : appointmentStats.filteredData.filter(a => a.status === 'completed').length}
@@ -371,16 +371,16 @@ export default function Dashboard({ onAddPatient, onAddAppointment }: DashboardP
         </Card>
 
         <Card className="interactive-card animate-fade-in-up delay-300">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
-            <CardTitle className="text-sm font-medium text-muted-foreground">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-xs sm:text-sm font-medium text-muted-foreground">
               {paymentStats.timeFilter.preset === 'all' || (!paymentStats.timeFilter.startDate && !paymentStats.timeFilter.endDate) ? 'إيرادات الشهر' : 'الإيرادات المفلترة'}
             </CardTitle>
-            <div className="p-2 rounded-xl bg-green-100 dark:bg-green-900/30">
-              <DollarSign className="h-5 w-5 text-green-600 dark:text-green-400" />
+            <div className="p-1.5 sm:p-2 rounded-lg sm:rounded-xl bg-green-100 dark:bg-green-900/30">
+              <DollarSign className="h-4 w-4 sm:h-5 sm:w-5 text-green-600 dark:text-green-400" />
             </div>
           </CardHeader>
           <CardContent className="stats-content">
-            <div className="text-3xl font-bold text-foreground">
+            <div className="text-2xl sm:text-3xl font-bold text-foreground">
               {paymentStats.timeFilter.preset === 'all' || (!paymentStats.timeFilter.startDate && !paymentStats.timeFilter.endDate)
                 ? formatAmount(stats.thisMonthRevenue)
                 : formatAmount(paymentStats.financialStats.totalRevenue)}
@@ -401,18 +401,18 @@ export default function Dashboard({ onAddPatient, onAddAppointment }: DashboardP
       </div>
 
       {/* Second Row Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 stagger-children">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 stagger-children">
         <Card className="interactive-card animate-fade-in-up delay-400">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
-            <CardTitle className="text-sm font-medium text-muted-foreground">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-xs sm:text-sm font-medium text-muted-foreground">
               {paymentStats.timeFilter.preset === 'all' || (!paymentStats.timeFilter.startDate && !paymentStats.timeFilter.endDate) ? 'إجمالي الإيرادات' : 'إجمالي الإيرادات المفلترة'}
             </CardTitle>
-            <div className="p-2 rounded-xl bg-green-100 dark:bg-green-900/30">
-              <DollarSign className="h-5 w-5 text-green-600 dark:text-green-400" />
+            <div className="p-1.5 sm:p-2 rounded-lg sm:rounded-xl bg-green-100 dark:bg-green-900/30">
+              <DollarSign className="h-4 w-4 sm:h-5 sm:w-5 text-green-600 dark:text-green-400" />
             </div>
           </CardHeader>
           <CardContent className="stats-content">
-            <div className="text-3xl font-bold text-foreground">
+            <div className="text-2xl sm:text-3xl font-bold text-foreground">
               {paymentStats.timeFilter.preset === 'all' || (!paymentStats.timeFilter.startDate && !paymentStats.timeFilter.endDate)
                 ? formatAmount(stats.totalRevenue)
                 : formatAmount(paymentStats.financialStats.totalRevenue)}
@@ -426,16 +426,16 @@ export default function Dashboard({ onAddPatient, onAddAppointment }: DashboardP
         </Card>
 
         <Card className="interactive-card animate-fade-in-up delay-500">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
-            <CardTitle className="text-sm font-medium text-muted-foreground">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-xs sm:text-sm font-medium text-muted-foreground">
               {paymentStats.timeFilter.preset === 'all' || (!paymentStats.timeFilter.startDate && !paymentStats.timeFilter.endDate) ? 'المدفوعات المعلقة' : 'المدفوعات المعلقة المفلترة'}
             </CardTitle>
-            <div className="p-2 rounded-xl bg-amber-100 dark:bg-amber-900/30">
-              <Clock className="h-5 w-5 text-amber-600 dark:text-amber-400" />
+            <div className="p-1.5 sm:p-2 rounded-lg sm:rounded-xl bg-amber-100 dark:bg-amber-900/30">
+              <Clock className="h-4 w-4 sm:h-5 sm:w-5 text-amber-600 dark:text-amber-400" />
             </div>
           </CardHeader>
           <CardContent className="stats-content">
-            <div className="text-3xl font-bold text-foreground">
+            <div className="text-2xl sm:text-3xl font-bold text-foreground">
               {paymentStats.timeFilter.preset === 'all' || (!paymentStats.timeFilter.startDate && !paymentStats.timeFilter.endDate)
                 ? formatAmount(stats.pendingPayments)
                 : formatAmount(paymentStats.financialStats.pendingAmount)}
@@ -448,22 +448,22 @@ export default function Dashboard({ onAddPatient, onAddAppointment }: DashboardP
           </CardContent>
         </Card>
 
-        <Card className="interactive-card animate-fade-in-up delay-600">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
-            <CardTitle className="text-sm font-medium text-muted-foreground">تنبيهات المخزون</CardTitle>
-            <div className="p-2 rounded-xl bg-orange-100 dark:bg-orange-900/30">
-              <Package className="h-5 w-5 text-orange-600 dark:text-orange-400" />
+        <Card className="interactive-card animate-fade-in-up delay-600 sm:col-span-2 lg:col-span-1">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-xs sm:text-sm font-medium text-muted-foreground">تنبيهات المخزون</CardTitle>
+            <div className="p-1.5 sm:p-2 rounded-lg sm:rounded-xl bg-orange-100 dark:bg-orange-900/30">
+              <Package className="h-4 w-4 sm:h-5 sm:w-5 text-orange-600 dark:text-orange-400" />
             </div>
           </CardHeader>
           <CardContent className="stats-content">
-            <div className="text-3xl font-bold text-foreground">{stats.lowStockItems}</div>
+            <div className="text-2xl sm:text-3xl font-bold text-foreground">{stats.lowStockItems}</div>
             <p className="text-xs text-muted-foreground mt-1">
               عناصر تحتاج انتباه
             </p>
             {stats.lowStockItems > 0 && (
-              <div className="mt-3 flex gap-2 flex-wrap">
-                <span className="badge-modern badge-modern-warning">مخزون منخفض: {lowStockCount}</span>
-                <span className="badge-modern badge-modern-danger">منتهي: {expiredCount + expiringSoonCount}</span>
+              <div className="mt-2 sm:mt-3 flex gap-1.5 sm:gap-2 flex-wrap">
+                <span className="badge-modern badge-modern-warning text-[10px] sm:text-xs">مخزون منخفض: {lowStockCount}</span>
+                <span className="badge-modern badge-modern-danger text-[10px] sm:text-xs">منتهي: {expiredCount + expiringSoonCount}</span>
               </div>
             )}
           </CardContent>
@@ -471,24 +471,24 @@ export default function Dashboard({ onAddPatient, onAddAppointment }: DashboardP
       </div>
 
       {/* Charts Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
         {/* Enhanced Revenue Chart */}
         <Card>
           <CardHeader>
-            <CardTitle className="flex items-center space-x-2 space-x-reverse">
-              <TrendingUp className="w-5 h-5" />
+            <CardTitle className="flex items-center space-x-2 space-x-reverse text-sm sm:text-base">
+              <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5" />
               <span>اتجاه الإيرادات</span>
             </CardTitle>
-            <CardDescription>
+            <CardDescription className="text-xs sm:text-sm">
               الإيرادات الشهرية خلال آخر 6 أشهر ({formatAmount(stats.totalRevenue)} إجمالي)
             </CardDescription>
           </CardHeader>
           <CardContent>
             {revenueData.length === 0 ? (
-              <div className="flex items-center justify-center h-80 text-muted-foreground">
+              <div className="flex items-center justify-center h-48 sm:h-64 lg:h-80 text-muted-foreground">
                 <div className="text-center">
-                  <TrendingUp className="w-12 h-12 mx-auto mb-4 opacity-50" />
-                  <p>لا توجد بيانات إيرادات متاحة</p>
+                  <TrendingUp className="w-8 h-8 sm:w-10 sm:w-12 mx-auto mb-3 sm:mb-4 opacity-50" />
+                  <p className="text-xs sm:text-sm">لا توجد بيانات إيرادات متاحة</p>
                 </div>
               </div>
             ) : (
@@ -504,7 +504,7 @@ export default function Dashboard({ onAddPatient, onAddAppointment }: DashboardP
                   />
                   <XAxis
                     dataKey="month"
-                    tick={{ fontSize: 12, fill: isDarkMode ? '#9ca3af' : '#6b7280' }}
+                    tick={{ fontSize: 10, fill: isDarkMode ? '#9ca3af' : '#6b7280' }}
                     axisLine={{ stroke: isDarkMode ? '#4b5563' : '#d1d5db' }}
                     tickLine={{ stroke: isDarkMode ? '#4b5563' : '#d1d5db' }}
                     interval={0}
@@ -513,7 +513,7 @@ export default function Dashboard({ onAddPatient, onAddAppointment }: DashboardP
                     height={60}
                   />
                   <YAxis
-                    tick={{ fontSize: 12, fill: isDarkMode ? '#9ca3af' : '#6b7280' }}
+                    tick={{ fontSize: 10, fill: isDarkMode ? '#9ca3af' : '#6b7280' }}
                     axisLine={{ stroke: isDarkMode ? '#4b5563' : '#d1d5db' }}
                     tickLine={{ stroke: isDarkMode ? '#4b5563' : '#d1d5db' }}
                     tickFormatter={(value) => formatChartValue(value, 'currency', currency)}
@@ -550,20 +550,20 @@ export default function Dashboard({ onAddPatient, onAddAppointment }: DashboardP
         {/* Enhanced Appointment Status Chart */}
         <Card>
           <CardHeader>
-            <CardTitle className="flex items-center space-x-2 space-x-reverse">
-              <Calendar className="w-5 h-5" />
+            <CardTitle className="flex items-center space-x-2 space-x-reverse text-sm sm:text-base">
+              <Calendar className="w-4 h-4 sm:w-5 sm:h-5" />
               <span>حالة المواعيد</span>
             </CardTitle>
-            <CardDescription>
+            <CardDescription className="text-xs sm:text-sm">
               توزيع حالات المواعيد ({appointments.length} موعد إجمالي)
             </CardDescription>
           </CardHeader>
           <CardContent>
             {appointmentStatusData.length === 0 ? (
-              <div className="flex items-center justify-center h-80 text-muted-foreground">
+              <div className="flex items-center justify-center h-48 sm:h-64 lg:h-80 text-muted-foreground">
                 <div className="text-center">
-                  <Calendar className="w-12 h-12 mx-auto mb-4 opacity-50" />
-                  <p>لا توجد مواعيد متاحة</p>
+                  <Calendar className="w-8 h-8 sm:w-10 sm:w-12 mx-auto mb-3 sm:mb-4 opacity-50" />
+                  <p className="text-xs sm:text-sm">لا توجد مواعيد متاحة</p>
                 </div>
               </div>
             ) : (
@@ -577,8 +577,8 @@ export default function Dashboard({ onAddPatient, onAddAppointment }: DashboardP
                     label={({ name, percent, value }) =>
                       value > 0 ? `${name}: ${value} (${(percent * 100).toFixed(0)}%)` : ''
                     }
-                    outerRadius={120}
-                    innerRadius={50}
+                    outerRadius={80}
+                    innerRadius={40}
                     fill="#8884d8"
                     dataKey="value"
                     stroke={isDarkMode ? '#1f2937' : '#ffffff'}
@@ -593,7 +593,7 @@ export default function Dashboard({ onAddPatient, onAddAppointment }: DashboardP
                     ))}
                   </Pie>
                   <Tooltip
-                    formatter={(value, name) => [
+                    formatter={(value, _name) => [
                       `${value} موعد`,
                       'العدد'
                     ]}
@@ -606,14 +606,14 @@ export default function Dashboard({ onAddPatient, onAddAppointment }: DashboardP
 
             {/* Status Legend */}
             {appointmentStatusData.length > 0 && (
-              <div className="mt-4 grid grid-cols-2 gap-2 text-sm">
+              <div className="mt-4 grid grid-cols-2 gap-2 text-xs sm:text-sm">
                 {appointmentStatusData.map((status, index) => (
-                  <div key={`legend-${index}`} className="flex items-center space-x-2 space-x-reverse">
+                  <div key={`legend-${index}`} className="flex items-center space-x-1.5 sm:space-x-2 space-x-reverse">
                     <div
-                      className="w-3 h-3 rounded-full"
+                      className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full"
                       style={{ backgroundColor: status.color }}
                     />
-                    <span className="text-muted-foreground">
+                    <span className="text-muted-foreground truncate">
                       {status.name}: {status.value} ({status.percentage}%)
                     </span>
                   </div>
@@ -627,43 +627,43 @@ export default function Dashboard({ onAddPatient, onAddAppointment }: DashboardP
       {/* Today's Appointments */}
       <Card>
         <CardHeader>
-          <CardTitle>مواعيد اليوم</CardTitle>
-          <CardDescription>
+          <CardTitle className="text-base sm:text-lg">مواعيد اليوم</CardTitle>
+          <CardDescription className="text-xs sm:text-sm">
             {todayAppointments.length} موعد مجدول لتاريخ {formatDate(new Date(), 'long')}
           </CardDescription>
         </CardHeader>
         <CardContent>
           {todayAppointments.length === 0 ? (
-            <div className="text-center py-8 text-muted-foreground">
-              <Calendar className="w-12 h-12 mx-auto mb-4 opacity-50" />
-              <p>لا توجد مواعيد مجدولة لليوم</p>
+            <div className="text-center py-6 sm:py-8 text-muted-foreground">
+              <Calendar className="w-8 h-8 sm:w-10 sm:w-12 mx-auto mb-3 sm:mb-4 opacity-50" />
+              <p className="text-xs sm:text-sm">لا توجد مواعيد مجدولة لليوم</p>
             </div>
           ) : (
-            <div className="space-y-4">
+            <div className="space-y-3 sm:space-y-4">
               {todayAppointments.slice(0, 5).map((appointment) => (
-                <div key={appointment.id} className="flex items-center justify-between p-4 border rounded-lg">
-                  <div className="flex items-center space-x-4 space-x-reverse">
-                    <div className="w-2 h-2 rounded-full bg-primary"></div>
-                    <div>
-                      <p className="font-medium arabic-enhanced">{appointment.patient?.full_name || appointment.patient_name || 'مريض غير معروف'}</p>
-                      <p className="text-sm text-muted-foreground">
+                <div key={appointment.id} className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-4 p-3 sm:p-4 border rounded-lg">
+                  <div className="flex items-center gap-2 sm:gap-4 w-full overflow-hidden">
+                    <div className="w-2 h-2 rounded-full bg-primary flex-shrink-0"></div>
+                    <div className="min-w-0 flex-1">
+                      <p className="font-medium text-sm sm:text-base arabic-enhanced truncate">{appointment.patient?.full_name || appointment.patient_name || 'مريض غير معروف'}</p>
+                      <p className="text-xs sm:text-sm text-muted-foreground">
                         {formatTime(appointment.start_time)} - {formatTime(appointment.end_time)}
                       </p>
                     </div>
                   </div>
-                  <div className="flex items-center space-x-2 space-x-reverse">
-                    <span className={`px-2 py-1 text-xs rounded-full ${
-                      appointment.status === 'scheduled' ? 'bg-blue-100 text-blue-800' :
-                      appointment.status === 'completed' ? 'bg-green-100 text-green-800' :
-                      appointment.status === 'cancelled' ? 'bg-red-100 text-red-800' :
-                      'bg-gray-100 text-gray-800'
+                  <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto">
+                    <span className={`px-2 py-1 text-xs rounded-full whitespace-nowrap ${
+                      appointment.status === 'scheduled' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300' :
+                      appointment.status === 'completed' ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300' :
+                      appointment.status === 'cancelled' ? 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300' :
+                      'bg-gray-100 text-gray-800 dark:bg-gray-900/30 dark:text-gray-300'
                     }`}>
                       {appointment.status === 'scheduled' ? 'مجدول' :
                        appointment.status === 'completed' ? 'مكتمل' :
                        appointment.status === 'cancelled' ? 'ملغي' :
                        appointment.status === 'no_show' ? 'لم يحضر' : appointment.status}
                     </span>
-                    <Button variant="ghost" size="sm">
+                    <Button variant="ghost" size="sm" className="flex-shrink-0">
                       <Eye className="w-4 h-4" />
                     </Button>
                   </div>
@@ -671,7 +671,7 @@ export default function Dashboard({ onAddPatient, onAddAppointment }: DashboardP
               ))}
               {todayAppointments.length > 5 && (
                 <div className="text-center">
-                  <Button variant="outline">
+                  <Button variant="outline" size="sm" className="text-xs sm:text-sm">
                     عرض جميع المواعيد ({todayAppointments.length})
                   </Button>
                 </div>

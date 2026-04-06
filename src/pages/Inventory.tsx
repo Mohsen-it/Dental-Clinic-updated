@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useInventoryStore } from '../store/inventoryStore'
 import { useAppointmentStore } from '../store/appointmentStore'
 import { Card, CardContent } from '@/components/ui/card'
@@ -121,48 +121,57 @@ export default function Inventory() {
 
 
 
-  const StatCard = ({ title, value, icon, color = "blue", trend }: any) => (
-    <Card className="interactive-card animate-fade-in-up">
-      <CardContent className="p-6">
-        <div className="flex items-center justify-between">
-          <div>
-            <p className="text-sm font-medium text-muted-foreground">{title}</p>
-            <p className="text-2xl font-bold text-foreground">{value}</p>
-            {trend && (
-              <div className="flex items-center mt-1">
-                {trend > 0 ? (
-                  <TrendingUp className="w-4 h-4 text-green-500 mr-1" />
-                ) : (
-                  <TrendingDown className="w-4 h-4 text-red-500 mr-1" />
-                )}
-                <span className={`text-xs ${trend > 0 ? 'text-green-500' : 'text-red-500'}`}>
-                  {Math.abs(trend)}%
-                </span>
-              </div>
-            )}
+  const StatCard = ({ title, value, icon, color = "blue", trend, delay = 0 }: any) => {
+    const colorClasses: { [key: string]: string } = {
+      blue: 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400',
+      green: 'bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400',
+      yellow: 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-600 dark:text-yellow-400',
+      red: 'bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400',
+    }
+    
+    return (
+      <Card className={`interactive-card animate-fade-in-up ${delay > 0 ? `delay-${delay * 100}` : ''}`}>
+        <CardContent className="p-3 sm:p-6">
+          <div className="flex items-center justify-between">
+            <div className="min-w-0 flex-1">
+              <p className="text-xs sm:text-sm font-medium text-muted-foreground truncate">{title}</p>
+              <p className="text-xl sm:text-2xl font-bold text-foreground">{value}</p>
+              {trend && (
+                <div className="flex items-center mt-1">
+                  {trend > 0 ? (
+                    <TrendingUp className="w-3 h-3 sm:w-4 sm:h-4 text-green-500 sm:mr-1" />
+                  ) : (
+                    <TrendingDown className="w-3 h-3 sm:w-4 sm:h-4 text-red-500 sm:mr-1" />
+                  )}
+                  <span className={`text-xs ${trend > 0 ? 'text-green-500' : 'text-red-500'}`}>
+                    {Math.abs(trend)}%
+                  </span>
+                </div>
+              )}
+            </div>
+            <div className={`p-1.5 sm:p-2 rounded-lg sm:rounded-xl flex-shrink-0 ${colorClasses[color] || colorClasses.blue}`}>
+              {React.cloneElement(icon as React.ReactElement, { className: "h-4 w-4 sm:h-5 sm:w-5" })}
+            </div>
           </div>
-          <div className={`text-2xl ${getIconStyles(color)}`}>
-            {icon}
-          </div>
-        </div>
-      </CardContent>
-    </Card>
-  )
+        </CardContent>
+      </Card>
+    )
+  }
 
   return (
-    <div className="space-y-6 rtl-layout page-container">
+    <div className="space-y-4 sm:space-y-6 rtl-layout page-container w-full overflow-x-hidden">
       {/* Header */}
-      <div className="page-header">
+      <div className="page-header flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-foreground">إدارة المخزون</h1>
-          <p className="text-muted-foreground mt-2">
+          <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-foreground">إدارة المخزون</h1>
+          <p className="text-sm sm:text-base text-muted-foreground mt-1 sm:mt-2">
             تتبع المواد والمعدات ومستويات المخزون
           </p>
         </div>
-        <div className="flex items-center space-x-2 space-x-reverse">
+        <div className="flex items-center gap-2 sm:space-x-2 space-x-reverse flex-wrap">
           <Button
             variant="outline"
-            className="btn-modern btn-modern-ghost"
+            className="btn-modern btn-modern-ghost text-sm"
             onClick={async () => {
               // Export inventory data
               if (filteredItems.length === 0) {
@@ -194,12 +203,13 @@ export default function Inventory() {
               }
             }}
           >
-            <Download className="w-4 h-4 ml-2" />
-            تصدير
+            <Download className="w-4 h-4 sm:ml-2" />
+            <span className="hidden sm:inline">تصدير</span>
           </Button>
-          <Button onClick={() => setShowAddItem(true)} className="btn-modern btn-modern-primary flex items-center space-x-2 space-x-reverse">
+          <Button onClick={() => setShowAddItem(true)} className="btn-modern btn-modern-primary text-sm">
             <Plus className="w-4 h-4" />
-            <span>إضافة عنصر جديد</span>
+            <span className="hidden sm:inline">إضافة عنصر جديد</span>
+            <span className="sm:hidden">إضافة</span>
           </Button>
         </div>
       </div>
@@ -207,47 +217,53 @@ export default function Inventory() {
       {/* Tabs */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="inventory" className="flex items-center gap-2">
-            <Package className="w-4 h-4" />
-            المخزون
+          <TabsTrigger value="inventory" className="flex items-center gap-1.5 sm:gap-2 text-sm">
+            <Package className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+            <span className="hidden sm:inline">المخزون</span>
+            <span className="sm:hidden">المخزون</span>
           </TabsTrigger>
-          <TabsTrigger value="alerts" className="flex items-center gap-2">
-            <Bell className="w-4 h-4" />
-            التنبيهات
+          <TabsTrigger value="alerts" className="flex items-center gap-1.5 sm:gap-2 text-sm">
+            <Bell className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+            <span className="hidden sm:inline">التنبيهات</span>
+            <span className="sm:hidden">التنبيهات</span>
             {(lowStockCount + expiredCount + expiringSoonCount) > 0 && (
-              <Badge variant="destructive" className="ml-1 text-xs">
+              <Badge variant="destructive" className="ml-0.5 sm:ml-1 text-[10px] sm:text-xs">
                 {lowStockCount + expiredCount + expiringSoonCount}
               </Badge>
             )}
           </TabsTrigger>
         </TabsList>
 
-        <TabsContent value="inventory" className="space-y-6">
+        <TabsContent value="inventory" className="space-y-4 sm:space-y-6">
           {/* Stats Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
             <StatCard
               title="إجمالي العناصر"
               value={items.length}
               icon={<Package />}
               color="blue"
+              delay={0}
             />
             <StatCard
               title="قيمة المخزون"
               value={<CurrencyDisplay amount={totalValue} />}
               icon={<DollarSign />}
               color="green"
+              delay={1}
             />
             <StatCard
               title="مخزون منخفض"
               value={lowStockCount}
               icon={<AlertTriangle />}
               color="yellow"
+              delay={2}
             />
             <StatCard
               title="منتهي الصلاحية"
               value={expiredCount + expiringSoonCount}
               icon={<Calendar />}
               color="red"
+              delay={3}
             />
           </div>
 

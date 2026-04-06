@@ -240,16 +240,16 @@ export default function EnhancedDashboard({
   }
 
   return (
-    <div className="space-y-6" dir="rtl">
+    <div className="space-y-4 sm:space-y-6 rtl-layout page-container w-full overflow-x-hidden" dir="rtl">
       {/* Header Section */}
-      <div className="flex items-center justify-between">
-        <div>
-          <div className="flex items-center gap-3 mb-2">
-            <h1 className="text-3xl font-bold text-foreground">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
+        <div className="w-full">
+          <div className="flex items-center gap-2 sm:gap-3 mb-1 sm:mb-2">
+            <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-foreground">
               مرحباً بك في تطبيق {clinicName}
             </h1>
           </div>
-          <p className="text-muted-foreground">
+          <p className="text-sm sm:text-base text-muted-foreground">
             نظام إدارة سريع ومتكامل  
           </p>
           {/* {lastSyncTime && (
@@ -259,16 +259,17 @@ export default function EnhancedDashboard({
           )} */}
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3 flex-wrap w-full sm:w-auto">
           {/* Global Search Toggle */}
           <Button
             variant="outline"
             onClick={() => setShowGlobalSearch(!showGlobalSearch)}
-            className="relative"
+            className="relative text-sm flex-1 sm:flex-none"
           >
-            <Search className="w-4 h-4 mr-2" />
-            بحث شامل
-            <span className="text-xs text-muted-foreground ml-2">(F)</span>
+            <Search className="w-4 h-4 sm:mr-2" />
+            <span className="hidden sm:inline">بحث شامل</span>
+            <span className="sm:hidden">بحث</span>
+            <span className="text-xs text-muted-foreground hidden sm:inline mr-1">(F)</span>
           </Button>
 
           {/* Alerts Indicator */}
@@ -291,9 +292,11 @@ export default function EnhancedDashboard({
             variant="outline"
             onClick={handleRefresh}
             disabled={isGlobalLoading}
+            className="text-sm flex-1 sm:flex-none"
           >
-            <RefreshCw className={`w-4 h-4 mr-2 ${isGlobalLoading ? 'animate-spin' : ''}`} />
-            تحديث
+            <RefreshCw className={`w-4 h-4 sm:mr-2 ${isGlobalLoading ? 'animate-spin' : ''}`} />
+            <span className="hidden sm:inline">تحديث</span>
+            <span className="sm:hidden">تحديث</span>
           </Button>
         </div>
       </div>
@@ -342,7 +345,7 @@ export default function EnhancedDashboard({
         </TabsList> */}
 
         {/* Overview Tab */}
-        <TabsContent value="overview" className="space-y-6">
+        <TabsContent value="overview" className="space-y-4 sm:space-y-6">
           {/* Quick Access Dashboard - Takes full width */}
           <QuickAccessDashboard
             onNavigateToPatients={onNavigateToPatients}
@@ -381,7 +384,7 @@ export default function EnhancedDashboard({
         </TabsContent>
 
         {/* Quick Access Tab */}
-        <TabsContent value="quick-access" className="space-y-6">
+        <TabsContent value="quick-access" className="space-y-4 sm:space-y-6">
           <QuickAccessDashboard
             onNavigateToPatients={onNavigateToPatients}
             onNavigateToAppointments={onNavigateToAppointments}

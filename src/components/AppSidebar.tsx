@@ -113,26 +113,24 @@ export function AppSidebar({ activeTab, onTabChange, ...props }: AppSidebarProps
   const clinicLogo = useStableClinicLogo()
 
   return (
-    <Sidebar collapsible="offcanvas" side="right" className="border-l border-border/20 rtl-layout glass-card" style={{
+    <Sidebar collapsible="icon" side="right" className="border-r border-border/20 rtl-layout glass-card" style={{
       boxShadow: '-4px 0 24px rgba(0, 0, 0, 0.06)',
-      borderRadius: '0 1.5rem 1.5rem 0',
       background: 'hsl(var(--sidebar-background))'
     }} {...props}>
 
   
-            <div className="flex items-center gap-3.5 p-3 rounded-xl hover:bg-accent/20 transition-all duration-300 ease-out cursor-pointer group">
+            <div className="flex items-center gap-2 p-2 rounded-xl hover:bg-accent/20 transition-all duration-300 ease-out cursor-pointer group">
               <div 
-                className="flex aspect-square size-12 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-secondary text-white overflow-hidden relative ring-2 ring-primary/20"
+                className="flex aspect-square size-8 sm:10 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-secondary text-white overflow-hidden relative ring-2 ring-primary/20"
                 style={{
                   boxShadow: '0 4px 12px -2px hsl(var(--primary) / 0.3)',
                 }}
               >
-                <User2 className="size-6" strokeWidth={2.5} />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/15 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl"></div>
+                <User2 className="size-4 sm:size-5" strokeWidth={2.5} />
               </div>
-              <div className="grid flex-1 text-right leading-tight gap-0.5">
-                <span className="truncate font-bold text-sm text-foreground">د. {doctorName}</span>
-                <span className="truncate text-[11px] font-medium text-muted-foreground">
+              <div className="grid flex-1 text-right leading-tight gap-0.5 overflow-hidden min-w-0">
+                <span className="truncate font-bold text-xs text-foreground">د. {doctorName}</span>
+                <span className="truncate text-[10px] font-medium text-muted-foreground">
                   {clinicName}
                 </span>
               </div>
@@ -140,38 +138,33 @@ export function AppSidebar({ activeTab, onTabChange, ...props }: AppSidebarProps
 
 
 
-
-      <SidebarContent className="px-3 py-4">
-        <SidebarGroup className="space-y-2">
+      <SidebarContent className="px-2 py-3">
+        <SidebarGroup className="space-y-1">
           <SidebarGroupContent>
-            <SidebarMenu className="space-y-1.5 nav-rtl">
+            <SidebarMenu className="space-y-1 nav-rtl">
               {navigationItems.map((item, index) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton
                     isActive={activeTab === item.url}
                     onClick={() => onTabChange(item.url)}
-                    className={`flex items-center gap-3 w-full text-right justify-start rounded-xl transition-all duration-300 ease-out py-3 px-4 text-base nav-item group relative overflow-hidden ${
+                    className={`flex items-center gap-2 w-full text-right justify-start rounded-lg transition-all duration-300 ease-out py-2 px-2 sm:px-3 text-xs nav-item group relative overflow-hidden ${
                       activeTab === item.url 
                         ? 'bg-primary/10 text-primary' 
                         : 'hover:bg-accent/50 text-foreground/80 hover:text-foreground'
                     }`}
                     style={{
-                      animationDelay: `${index * 50}ms`
+                      animationDelay: `${index * 30}ms`
                     }}
                   >
-                    <div className={`absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300`}></div>
-                    <div className={`relative z-10 flex items-center gap-3 w-full`}>
-                      <div className={`p-2 rounded-lg transition-all duration-300 ${
+                    <div className={`relative z-10 flex items-center gap-2 w-full min-w-0`}>
+                      <div className={`p-1.5 rounded-md transition-all duration-300 flex-shrink-0 ${
                         activeTab === item.url 
-                          ? 'bg-primary text-primary-foreground shadow-md' 
-                          : 'bg-muted group-hover:bg-primary/10 group-hover:scale-110'
+                          ? 'bg-primary text-primary-foreground shadow-sm' 
+                          : 'bg-muted group-hover:bg-primary/10'
                       }`}>
-                        <item.icon className={`size-5 ${activeTab === item.url ? '' : 'text-muted-foreground group-hover:text-primary'}`} />
+                        <item.icon className={`size-3.5 sm:size-4 ${activeTab === item.url ? '' : 'text-muted-foreground group-hover:text-primary'}`} />
                       </div>
-                      <span className={`font-medium text-sm flex-1 ${activeTab === item.url ? 'font-semibold' : ''}`}>{item.title}</span>
-                      {activeTab === item.url && (
-                        <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1.5 h-8 bg-primary rounded-l-full"></div>
-                      )}
+                      <span className={`font-medium text-xs flex-1 truncate ${activeTab === item.url ? 'font-semibold' : ''}`}>{item.title}</span>
                     </div>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
