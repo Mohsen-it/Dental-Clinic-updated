@@ -16,10 +16,9 @@ import {
   AlertTriangle
 } from 'lucide-react'
 import { useGlobalStore } from '@/store/globalStore'
-import { QuickAccessService } from '@/services/quickAccessService'
 import { useCurrency } from '@/contexts/CurrencyContext'
 import type { Patient, Appointment, Payment, ToothTreatment } from '@/types'
-
+import AddPatientDialog from '@/components/patients/AddPatientDialog'
 interface QuickAccessDashboardProps {
   onNavigateToPatients?: () => void
   onNavigateToAppointments?: () => void
@@ -163,10 +162,10 @@ export default function QuickAccessDashboard({
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <ShortcutTooltip shortcut="A" description="إضافة مريض جديد">
+            {/* <ShortcutTooltip shortcut="A" description="إضافة مريض جديد">
               <Button
                 onClick={() => {
-                  console.log('🏥 Add Patient button clicked!')
+                  
                   onAddPatient?.()
                 }}
                 className="h-10 sm:h-12 justify-between hover:shadow-lg transition-all duration-200 active:scale-95 text-xs sm:text-sm"
@@ -178,7 +177,7 @@ export default function QuickAccessDashboard({
                 </div>
                 <KeyboardShortcut shortcut="A" size="sm" />
               </Button>
-            </ShortcutTooltip>
+            </ShortcutTooltip> */}
 
             <ShortcutTooltip shortcut="S" description="حجز موعد جديد">
               <Button
