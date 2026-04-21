@@ -5,6 +5,7 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
+  DialogBody,
 } from '@/components/ui/dialog'
 import './enhanced-dental-images.css'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
@@ -515,7 +516,7 @@ export default function EnhancedToothDetailsDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[900px] max-h-[90vh] overflow-y-auto" dir="rtl">
+      <DialogContent size="4xl" className="overflow-y-hidden" dir="rtl">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-3 text-right">
             <div
@@ -568,6 +569,7 @@ export default function EnhancedToothDetailsDialog({
           )}
         </DialogHeader>
 
+        <DialogBody dir="rtl">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full" dir="rtl">
           <TabsList className="grid w-full grid-cols-3">
             <TabsTrigger value="treatments" className="flex items-center gap-2">
@@ -1289,6 +1291,7 @@ export default function EnhancedToothDetailsDialog({
 
 
         </Tabs>
+        </DialogBody>
       </DialogContent>
     </Dialog>
   )

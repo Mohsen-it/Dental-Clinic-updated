@@ -300,7 +300,7 @@ export default function AddAppointmentDialog({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto" dir="rtl">
+      <DialogContent size="2xl" className="overflow-y-hidden" dir="rtl">
         <DialogHeader>
           <DialogTitle className="text-xl font-semibold">
             {initialData ? 'تعديل الموعد' : 'إضافة موعد جديد'}

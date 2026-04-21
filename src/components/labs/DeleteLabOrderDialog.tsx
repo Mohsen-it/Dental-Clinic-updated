@@ -72,7 +72,7 @@ export default function DeleteLabOrderDialog({ open, onOpenChange, labOrder }: D
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[500px]" dir="rtl">
+      <DialogContent size="md" dir="rtl">
         <DialogHeader dir="rtl">
           <DialogTitle className="flex items-center gap-2 text-destructive text-right">
             <AlertTriangle className="h-5 w-5" />

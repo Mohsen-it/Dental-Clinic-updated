@@ -10,6 +10,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
+  DialogBody,
 } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -69,7 +70,7 @@ export default function AddPatientDialog({ isOpen, onClose, onSave }: AddPatient
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto" dir="rtl">
+      <DialogContent size="2xl" className="overflow-y-hidden" dir="rtl">
         <DialogHeader>
           <DialogTitle>إضافة مريض جديد</DialogTitle>
           <DialogDescription>
@@ -77,7 +78,8 @@ export default function AddPatientDialog({ isOpen, onClose, onSave }: AddPatient
           </DialogDescription>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <DialogBody>
+          <form onSubmit={handleSubmit} className="space-y-6">
           {/* Basic Information */}
           <div className="space-y-4">
             <h3 className="text-lg font-medium">المعلومات الأساسية</h3>
@@ -286,6 +288,7 @@ export default function AddPatientDialog({ isOpen, onClose, onSave }: AddPatient
             </Button>
           </DialogFooter>
         </form>
+        </DialogBody>
       </DialogContent>
     </Dialog>
   )

@@ -124,7 +124,7 @@ export default function AddLabDialog({ open, onOpenChange, editingLab }: AddLabD
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[500px]" dir="rtl">
+      <DialogContent size="md" dir="rtl">
         <DialogHeader className="text-right" dir="rtl">
           <DialogTitle className="flex items-center gap-2 justify-end text-right">
             <span>{editingLab ? 'تعديل المخبر' : 'إضافة مخبر جديد'}</span>

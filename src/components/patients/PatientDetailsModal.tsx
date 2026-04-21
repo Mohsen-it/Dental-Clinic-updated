@@ -7,6 +7,7 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
+  DialogBody,
 } from '@/components/ui/dialog'
 import {
   Tabs,
@@ -403,8 +404,8 @@ export default function PatientDetailsModal({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-hidden" dir="rtl">
-        <DialogHeader className="text-right">
+      <DialogContent size="4xl" className="max-h-[90vh] overflow-hidden" dir="rtl">
+        <DialogHeader className="text-right border-b-0 pb-0">
           <div className="flex items-center justify-between">
             <div className="text-right">
               <DialogTitle className="text-xl arabic-enhanced text-right">
@@ -472,136 +473,228 @@ export default function PatientDetailsModal({
             </TabsTrigger>
           </TabsList>
 
-          <div className="mt-4 overflow-y-auto max-h-[calc(90vh-200px)] dialog-rtl" dir="rtl">
+          <DialogBody className="dialog-rtl" dir="rtl">
             <TabsContent value="info" className="space-y-4 dialog-rtl" dir="rtl">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4" dir="rtl">
-                {/* Basic Information */}
-                <Card className="card-rtl">
-                  <CardHeader className="card-header">
-                    <CardTitle className="flex items-center gap-2 text-right">
-                      <User className="w-5 h-5" />
-                      المعلومات الأساسية
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4" dir="rtl">
+                {/* Basic Information - Enhanced Card */}
+                <Card className="md:col-span-2 card-rtl border-t-4 border-t-blue-500">
+                  <CardHeader className="card-header pb-2">
+                    <CardTitle className="flex items-center gap-3 text-lg text-right">
+                      <div className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center">
+                          <User className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                      </div>
+                      <div>
+                        <span className="font-bold">المعلومات الأساسية</span>
+                        <p className="text-xs text-muted-foreground font-normal mt-0.5">بيانات المريض الشخصية</p>
+                      </div>
                     </CardTitle>
                   </CardHeader>
-                  <CardContent className="space-y-3 card-content" dir="rtl">
-                    <div className="flex justify-between items-center">
-                      <Badge variant="outline">#{patient.serial_number}</Badge>
-                      <span className="text-muted-foreground">#:</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="font-medium">{patient.full_name}</span>
-                      <span className="text-muted-foreground">الاسم الكامل:</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <Badge variant={patient.gender === 'male' ? 'default' : 'secondary'}>
-                        {patient.gender === 'male' ? 'ذكر' : 'أنثى'}
-                      </Badge>
-                      <span className="text-muted-foreground">الجنس:</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span>{patient.age} سنة</span>
-                      <span className="text-muted-foreground">العمر:</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm">{formatDate(patient.date_added || patient.created_at)}</span>
-                      <span className="text-muted-foreground">تاريخ الإضافة:</span>
+                  <CardContent className="card-content pt-0" dir="rtl">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+                      {/* Patient Number - Special Styling */}
+                      <div className=" f p-4 rounded-lg border border-blue-100 dark:border-blue-800">
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm text-muted-foreground">رقم المريض</span>
+                          <Badge variant="outline" className="bg-blue-600 text-white hover:bg-blue-700 border-none">
+                            #{patient.serial_number}
+                          </Badge>
+                        </div>
+                      </div>
+
+                      {/* Full Name */}
+                      <div className=" p-4 rounded-lg border border-green-100 dark:border-green-800">
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm text-muted-foreground">الاسم</span>
+                          <span className="font-bold text-green-700 dark:text-green-400">{patient.full_name}</span>
+                        </div>
+                      </div>
+
+                      {/* Gender */}
+                      <div className=" p-4 rounded-lg border border-purple-100 dark:border-purple-800">
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm text-muted-foreground">الجنس</span>
+                          <Badge variant={patient.gender === 'male' ? 'default' : 'secondary'} className={patient.gender === 'male' ? 'bg-blue-600' : 'bg-pink-500'}>
+                            {patient.gender === 'male' ? 'ذكر' : 'أنثى'}
+                          </Badge>
+                        </div>
+                      </div>
+
+                      {/* Age */}
+                      <div className=" p-4 rounded-lg border border-orange-100 dark:border-orange-800">
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm text-muted-foreground">العمر</span>
+                          <span className="font-bold text-orange-700 dark:text-orange-400">{patient.age} سنة</span>
+                        </div>
+                      </div>
+
+                      {/* Date Added */}
+                      <div className="sm:col-span-2  p-4 rounded-lg border border-gray-100 dark:border-gray-700">
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm text-muted-foreground">تاريخ الإضافة</span>
+                          <div className="flex items-center gap-2">
+                            <Calendar className="w-4 h-4 text-muted-foreground" />
+                            <span className="font-medium">{formatDate(patient.date_added || patient.created_at)}</span>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </CardContent>
                 </Card>
 
-                {/* Contact Information */}
-                <Card className="card-rtl">
-                  <CardHeader className="card-header">
-                    <CardTitle className="flex items-center gap-2 text-right">
-                      <Phone className="w-5 h-5" />
-                      معلومات الاتصال
+                {/* Contact Information - Enhanced Card */}
+                <Card className="card-rtl border-t-4 border-t-green-500">
+                  <CardHeader className="card-header pb-2">
+                    <CardTitle className="flex items-center gap-3 text-lg text-right">
+                      <div className="w-10 h-10 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center">
+                        <Phone className="w-5 h-5 text-green-600 dark:text-green-400" />
+                      </div>
+                      <div>
+                        <span className="font-bold">معلومات الاتصال</span>
+                        <p className="text-xs text-muted-foreground font-normal mt-0.5">طرق التواصل مع المريض</p>
+                      </div>
                     </CardTitle>
                   </CardHeader>
-                  <CardContent className="space-y-3 card-content" dir="rtl">
-                    <div className="flex items-center justify-between">
-                      {patient.phone ? (
+                  <CardContent className="space-y-4 card-content pt-0" dir="rtl">
+                    {/* Phone */}
+                    <div className=" p-4 rounded-lg border border-blue-100 dark:border-blue-800">
+                      <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
-                          <span>{patient.phone}</span>
-                          <Phone className="w-4 h-4 text-muted-foreground" />
+                          <Phone className="w-4 h-4 text-blue-500" />
+                          <span className="text-sm text-muted-foreground">الهاتف</span>
                         </div>
-                      ) : (
-                        <span className="text-muted-foreground">غير محدد</span>
-                      )}
-                      <span className="text-muted-foreground">رقم الهاتف:</span>
+                        {patient.phone ? (
+                          <span className="font-bold text-blue-700 dark:text-blue-300">{patient.phone}</span>
+                        ) : (
+                          <span className="text-muted-foreground text-sm">غير محدد</span>
+                        )}
+                      </div>
                     </div>
-                    <div className="flex items-center justify-between">
-                      {patient.email ? (
+
+                    {/* Email */}
+                    <div className=" p-4 rounded-lg border border-purple-100 dark:border-purple-800">
+                      <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
-                          <span className="text-sm">{patient.email}</span>
-                          <Mail className="w-4 h-4 text-muted-foreground" />
+                          <Mail className="w-4 h-4 text-purple-500" />
+                          <span className="text-sm text-muted-foreground">البريد</span>
                         </div>
-                      ) : (
-                        <span className="text-muted-foreground">غير محدد</span>
-                      )}
-                      <span className="text-muted-foreground">البريد الإلكتروني:</span>
+                        {patient.email ? (
+                          <span className="font-medium text-sm text-purple-700 dark:text-purple-300 truncate max-w-[150px]">{patient.email}</span>
+                        ) : (
+                          <span className="text-muted-foreground text-sm">غير محدد</span>
+                        )}
+                      </div>
                     </div>
-                    <div className="flex items-start justify-between">
-                      {patient.address ? (
-                        <div className="flex items-start gap-2 max-w-[200px]">
-                          <span className="text-sm text-right">{patient.address}</span>
-                          <MapPin className="w-4 h-4 text-muted-foreground mt-0.5" />
+
+                    {/* Address */}
+                    <div className=" p-4 rounded-lg border border-indigo-100 dark:border-indigo-800">
+                      <div className="flex items-start justify-between">
+                        <div className="flex items-center gap-2">
+                          <MapPin className="w-4 h-4 text-indigo-500" />
+                          <span className="text-sm text-muted-foreground">العنوان</span>
                         </div>
-                      ) : (
-                        <span className="text-muted-foreground">غير محدد</span>
-                      )}
-                      <span className="text-muted-foreground">العنوان:</span>
+                        {patient.address ? (
+                          <span className="text-sm font-medium text-indigo-700 dark:text-indigo-300 text-right max-w-[150px]">{patient.address}</span>
+                        ) : (
+                          <span className="text-muted-foreground text-sm">غير محدد</span>
+                        )}
+                      </div>
                     </div>
                   </CardContent>
                 </Card>
 
-                {/* Medical Information */}
-                <Card className="md:col-span-2 card-rtl">
-                  <CardHeader className="card-header">
-                    <CardTitle className="flex items-center gap-2 text-right">
-                      <Heart className="w-5 h-5" />
-                      المعلومات الطبية
+                {/* Medical Information - Enhanced Card */}
+                <Card className="md:col-span-3 card-rtl border-t-4 border-t-red-500">
+                  <CardHeader className="card-header pb-2">
+                    <CardTitle className="flex items-center gap-3 text-lg text-right">
+                      <div className="w-10 h-10 rounded-full bg-red-100 dark:bg-red-900 flex items-center justify-center">
+                        <Heart className="w-5 h-5 text-red-600 dark:text-red-400" />
+                      </div>
+                      <div>
+                        <span className="font-bold">المعلومات الطبية</span>
+                        <p className="text-xs text-muted-foreground font-normal mt-0.5">التاريخ الطبي والحالات الصحية</p>
+                      </div>
                     </CardTitle>
                   </CardHeader>
-                  <CardContent className="space-y-4 card-content" dir="rtl">
-                    <div>
-                      <h4 className="font-medium mb-2 flex items-center gap-2 text-right">
-                        <FileText className="w-4 h-4" />
-                        حالة المريض
-                      </h4>
-                      <p className="text-sm bg-muted p-3 rounded-md text-right">{patient.patient_condition}</p>
-                    </div>
-
-                    {patient.allergies && (
-                      <div>
-                        <h4 className="font-medium mb-2 flex items-center gap-2 text-orange-600 dark:text-orange-400 text-right">
-                          <AlertTriangle className="w-4 h-4" />
-                          الحساسية
-                        </h4>
-                        <div className="text-sm bg-orange-50 dark:bg-yellow-900 border border-orange-200 dark:border-yellow-600 p-3 rounded-md text-orange-900 dark:text-yellow-100 text-right">
-                          {patient.allergies}
+                  <CardContent className="card-content" dir="rtl">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {/* Patient Condition */}
+                      <div className=" p-4 rounded-lg border border-blue-100 dark:border-blue-800">
+                        <div className="flex items-start gap-3">
+                          <FileText className=" w-5 h-5 text-blue-500 mt-0.5" />
+                          <div className="flex-1">
+                            <span className="text-sm text-muted-foreground block mb-2">حالة المريض</span>
+                            <p className="text-sm font-medium text-right dark:bg-gray-800 p-3 rounded  dark:border-blue-700">
+                              {patient.patient_condition || 'غير محدد'}
+                            </p>
+                          </div>
                         </div>
                       </div>
-                    )}
 
-                    {patient.medical_conditions && (
-                      <div>
-                        <h4 className="font-medium mb-2 flex items-center gap-2 text-right">
-                          <Heart className="w-4 h-4" />
-                          الحالات الطبية
-                        </h4>
-                        <p className="text-sm bg-muted p-3 rounded-md text-right">{patient.medical_conditions}</p>
-                      </div>
-                    )}
+                      {/* Allergies - Highlighted if exists */}
+                      {patient.allergies ? (
+                        <div className=" p-4 rounded-lg border-2 border-orange-300 dark:border-orange-600">
+                          <div className="flex items-start gap-3">
+                            <AlertTriangle className="w-5 h-5 text-orange-600 mt-0.5" />
+                            <div className="flex-1">
+                              <span className=" text-sm text-orange-700 dark:text-orange-400 font-bold block mb-2">الحساسية</span>
+                              <p className="text-sm font-medium text-right bg-orange-100 dark:bg-orange-900/50 p-3 rounded border border-orange-200 dark:border-orange-600 text-orange-800 dark:text-orange-200">
+                                {patient.allergies}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className=" p-4 rounded-lg border border-green-100 dark:border-green-800">
+                          <div className="flex items-start gap-3">
+                            <AlertTriangle className="w-5 h-5 text-green-500 mt-0.5" />
+                            <div className="flex-1">
+                              <span className="text-sm text-green-700 dark:text-green-400 block mb-2">الحساسية</span>
+                              <p className="text-sm text-muted-foreground text-right">لا توجد حساسية مسجلة</p>
+                            </div>
+                          </div>
+                        </div>
+                      )}
 
-                    {patient.notes && (
-                      <div>
-                        <h4 className="font-medium mb-2 flex items-center gap-2 text-right">
-                          <FileText className="w-4 h-4" />
-                          ملاحظات إضافية
-                        </h4>
-                        <p className="text-sm bg-muted p-3 rounded-md text-right">{patient.notes}</p>
-                      </div>
-                    )}
+                      {/* Medical Conditions */}
+                      {patient.medical_conditions ? (
+                        <div className="p-4 rounded-lg border border-red-100 dark:border-red-800">
+                          <div className="flex items-start gap-3">
+                            <Heart className="w-5 h-5 text-red-500 mt-0.5" />
+                            <div className="flex-1">
+                              <span className="text-sm text-red-700 dark:text-red-400 font-bold block mb-2">الحالات الطبية</span>
+                              <p className="text-sm font-medium text-right bg-red-100 dark:bg-red-900/50 p-3 rounded border border-red-200 dark:border-red-700 text-red-800 dark:text-red-200">
+                                {patient.medical_conditions}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className=" p-4 rounded-lg border border-gray-100 dark:border-gray-700">
+                          <div className="flex items-start gap-3">
+                            <Heart className="w-5 h-5 text-gray-500 mt-0.5" />
+                            <div className="flex-1">
+                              <span className="text-sm text-muted-foreground block mb-2">الحالات الطبية</span>
+                              <p className="text-sm text-muted-foreground text-right">لا توجد حالات طبية مسجلة</p>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Notes */}
+                      {patient.notes ? (
+                        <div className="md:col-span-2 bg-gradient-to-r from-amber-50 to-transparent dark:from-amber-900/30 p-4 rounded-lg border border-amber-100 dark:border-amber-800">
+                          <div className="flex items-start gap-3">
+                            <FileText className="w-5 h-5 text-amber-500 mt-0.5" />
+                            <div className="flex-1">
+                              <span className="text-sm text-amber-700 dark:text-amber-400 font-bold block mb-2">ملاحظات إضافية</span>
+                              <p className="text-sm font-medium text-right bg-amber-100 dark:bg-amber-900/50 p-3 rounded border border-amber-200 dark:border-amber-700 text-amber-800 dark:text-amber-200">
+                                {patient.notes}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      ) : null}
+                    </div>
                   </CardContent>
                 </Card>
               </div>
@@ -1366,7 +1459,7 @@ export default function PatientDetailsModal({
             </TabsContent>
 
 
-          </div>
+          </DialogBody>
         </Tabs>
       </DialogContent>
 

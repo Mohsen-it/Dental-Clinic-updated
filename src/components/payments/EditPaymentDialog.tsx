@@ -354,7 +354,7 @@ export default function EditPaymentDialog({ open, onOpenChange, payment }: EditP
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto bg-background border-border shadow-2xl" dir="rtl">
+      <DialogContent size="4xl" className="overflow-y-hidden bg-background" dir="rtl">
         <DialogHeader className="border-b border-border pb-4">
           <DialogTitle className="flex items-center text-xl font-semibold text-foreground">
             <Edit className="w-5 h-5 ml-2 text-primary" />

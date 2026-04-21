@@ -567,7 +567,7 @@ export default function AddPaymentDialog({ open, onOpenChange, preSelectedPatien
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="w-full max-w-md md:max-w-2xl lg:max-w-3xl max-h-[90vh] overflow-y-auto bg-background border-border shadow-2xl p-0 rounded-xl" dir="rtl">
+      <DialogContent size="3xl" className="overflow-y-hidden p-0" dir="rtl">
         <DialogHeader className="border-b border-border pb-4 px-4 md:px-6 pt-4 md:pt-6 sticky top-0 bg-background z-10">
           <DialogTitle className="flex items-center gap-2 text-xl md:text-2xl font-bold text-foreground">
             <CreditCard className="w-5 h-5 md:w-6 md:h-6 text-primary" />

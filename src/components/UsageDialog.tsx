@@ -136,7 +136,7 @@ export default function UsageDialog({
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
-      <DialogContent className="sm:max-w-[500px]" dir="rtl">
+      <DialogContent size="md" dir="rtl">
         <DialogHeader>
           <DialogTitle className="text-xl font-bold text-foreground">
             تسجيل استخدام المواد

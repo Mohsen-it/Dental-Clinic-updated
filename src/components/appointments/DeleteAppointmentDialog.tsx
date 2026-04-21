@@ -33,7 +33,7 @@ export default function DeleteAppointmentDialog({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[425px]" dir="rtl">
+      <DialogContent size="sm" dir="rtl">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2 text-destructive arabic-enhanced">
             <AlertTriangle className="w-5 h-5" />

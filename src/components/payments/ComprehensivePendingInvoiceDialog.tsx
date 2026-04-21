@@ -1000,7 +1000,7 @@ ${invoiceSettings.discount_reason ? `💸 سبب الخصم: ${invoiceSettings.d
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-[95vw] max-h-[95vh] p-0">
+      <DialogContent size="full" className="p-0">
         <DialogHeader className="p-4 border-b">
           <DialogTitle className="flex items-center justify-between">
             <span className="flex items-center gap-2">

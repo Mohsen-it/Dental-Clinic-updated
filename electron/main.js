@@ -1,11 +1,12 @@
-const { app, BrowserWindow, ipcMain, dialog, shell, Menu } = require('electron')
+const { app, BrowserWindow, ipcMain, dialog, shell, Menu, nativeImage } = require('electron')
 const path = require('path')
 const { join } = path
+const APP_USER_MODEL_ID = 'com.agorracode.dentalclinic'
 
 // ✅ تعيين App User Model ID لنظام Windows (يجب أن يكون قبل جاهزية التطبيق)
 // هذا يحل مشكلة ظهور أيقونة Electron الافتراضية على سطح المكتب
 if (process.platform === 'win32') {
-  app.setAppUserModelId('com.agorracode.dentalclinic')
+  app.setAppUserModelId(APP_USER_MODEL_ID)
 }
 
 // ✅ معالج الأخطاء الشامل
@@ -93,6 +94,23 @@ function createWindow() {
    ? join(__dirname, '../assets/icon.ico') // أثناء التطوير
    : join(process.resourcesPath, 'assets', 'icon.ico'); // بعد البناء
 
+  const fs = require('fs')
+  const resolvedIconPathCandidates = [
+    iconPath,
+    join(app.getAppPath(), 'assets', 'icon.ico'),
+    join(process.cwd(), 'assets', 'icon.ico'),
+    join(__dirname, '../assets/icon.ico'),
+    join(process.resourcesPath, 'assets', 'icon.ico')
+  ]
+  const resolvedIconPath = resolvedIconPathCandidates.find(candidate => fs.existsSync(candidate)) || iconPath
+  const appIcon = nativeImage.createFromPath(resolvedIconPath)
+
+  if (appIcon.isEmpty()) {
+    console.warn('⚠️ Failed to load app icon for taskbar:', resolvedIconPath)
+  } else {
+    console.log('✅ App icon loaded from:', resolvedIconPath)
+  }
+
   mainWindow = new BrowserWindow({
     width: 1400,
     height: 900,
@@ -129,8 +147,13 @@ function createWindow() {
     // ✅ إعدادات إضافية للنافذة
     backgroundColor: '#ffffff', // لون خلفية أبيض لتجنب الشاشة السوداء
     // ✅ تحسين الأداء
+    icon: appIcon.isEmpty() ? resolvedIconPath : appIcon,
     useContentSize: true,
   })
+
+  if (process.platform === 'win32' && !appIcon.isEmpty()) {
+    mainWindow.setIcon(appIcon)
+  }
 
   // Set CSP headers for security
   mainWindow.webContents.session.webRequest.onHeadersReceived((details, callback) => {
@@ -362,6 +385,10 @@ function createWindow() {
 
 app.whenReady().then(async () => {
   console.log('🚀 Electron app is ready, initializing services...')
+
+  if (process.platform === 'win32') {
+    app.setAppUserModelId(APP_USER_MODEL_ID)
+  }
 
   // Hide default menu bar
   Menu.setApplicationMenu(null)

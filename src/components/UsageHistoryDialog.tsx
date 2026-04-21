@@ -82,7 +82,7 @@ export default function UsageHistoryDialog({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[700px] max-h-[80vh]" dir="rtl">
+      <DialogContent size="3xl" className="overflow-y-hidden" dir="rtl">
         <DialogHeader>
           <DialogTitle className="text-xl font-bold text-foreground flex items-center gap-2">
             <Activity className="h-5 w-5" />

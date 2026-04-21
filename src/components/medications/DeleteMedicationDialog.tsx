@@ -50,7 +50,7 @@ export default function DeleteMedicationDialog({
 
   return (
     <AlertDialog open={open} onOpenChange={handleClose}>
-      <AlertDialogContent dir="rtl" className="sm:max-w-[425px]">
+      <AlertDialogContent dir="rtl" size="sm">
         <AlertDialogHeader>
           <AlertDialogTitle className="flex items-center gap-2 text-right">
             <AlertTriangle className="w-5 h-5 text-red-600" />

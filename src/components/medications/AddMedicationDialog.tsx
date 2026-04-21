@@ -113,7 +113,7 @@ export default function AddMedicationDialog({
 
   return (
     <Dialog open={open} onOpenChange={handleClose}>
-      <DialogContent className="sm:max-w-[500px]" dir="rtl">
+      <DialogContent size="md" dir="rtl">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2 text-right">
             <Pill className="w-5 h-5 text-blue-600" />
