@@ -157,7 +157,7 @@ const AddClinicNeedDialog: React.FC<AddClinicNeedDialogProps> = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent size="lg" dir="rtl">
+      <DialogContent size="lg" className="overflow-y-auto max-h-[90vh]" dir="rtl">
         <DialogHeader>
           <DialogTitle>
             {editingNeed ? 'تعديل الاحتياج' : 'إضافة احتياج جديد'}

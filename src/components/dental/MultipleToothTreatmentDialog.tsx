@@ -335,7 +335,7 @@ export default function MultipleToothTreatmentDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent size="2xl" className="overflow-y-hidden">
+      <DialogContent size="2xl" className="overflow-y-auto max-h-[90vh]">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2 text-xl">
             <Activity className="w-6 h-6 text-blue-600 dark:text-blue-400" />

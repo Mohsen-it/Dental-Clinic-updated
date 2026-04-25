@@ -153,7 +153,7 @@ export default function AddInventoryDialog({
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
-      <DialogContent size="lg" className="overflow-y-hidden" dir="rtl">
+      <DialogContent size="lg" className="overflow-y-auto max-h-[90vh]" dir="rtl">
         <DialogHeader>
           <DialogTitle className="text-xl font-bold text-foreground">
             إضافة عنصر مخزون جديد

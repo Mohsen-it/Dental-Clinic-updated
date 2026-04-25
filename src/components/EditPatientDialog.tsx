@@ -113,7 +113,7 @@ export default function EditPatientDialog({ isOpen, patient, onClose, onSave }: 
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent size="2xl" className="overflow-y-hidden" dir="rtl">
+      <DialogContent size="2xl" className="overflow-y-auto max-h-[90vh]" dir="rtl">
         <DialogHeader>
           <DialogTitle>تعديل بيانات المريض</DialogTitle>
           <DialogDescription>

@@ -101,7 +101,7 @@ export default function PaymentDetailsDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent size="4xl" className="overflow-y-hidden bg-background" dir="rtl">
+      <DialogContent size="4xl" className="overflow-y-auto max-h-[90vh] bg-background" dir="rtl">
         <DialogHeader className="border-b border-border pb-4">
           <DialogTitle className="flex items-center text-xl font-semibold text-foreground">
             <Eye className="w-5 h-5 ml-2 text-primary" />

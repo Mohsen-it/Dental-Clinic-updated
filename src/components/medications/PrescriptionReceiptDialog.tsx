@@ -562,7 +562,7 @@ ${prescription.notes ? `📝 ملاحظات: ${prescription.notes}` : ''}
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent size="3xl" className="overflow-y-hidden" dir="rtl">
+      <DialogContent size="3xl" className="overflow-y-auto max-h-[90vh]" dir="rtl">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2 text-right">
             <FileText className="w-5 h-5 text-green-600" />

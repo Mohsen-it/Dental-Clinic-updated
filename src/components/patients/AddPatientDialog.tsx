@@ -149,7 +149,7 @@ export default function AddPatientDialog({ open, onOpenChange }: AddPatientDialo
 
   return (
     <Dialog open={open} onOpenChange={handleClose}>
-      <DialogContent size="2xl" className="overflow-y-hidden" dir="rtl">
+      <DialogContent size="2xl" className="overflow-y-auto max-h-[90vh]" dir="rtl">
         <DialogHeader>
           <DialogTitle>إضافة مريض جديد</DialogTitle>
           <DialogDescription>

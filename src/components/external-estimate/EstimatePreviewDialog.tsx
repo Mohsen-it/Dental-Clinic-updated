@@ -310,7 +310,7 @@ export default function EstimatePreviewDialog({ open, onOpenChange, estimateData
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent size="4xl" className="overflow-y-hidden" dir="rtl">
+      <DialogContent size="4xl" className="overflow-y-auto max-h-[90vh]" dir="rtl">
         <DialogHeader>
           <DialogTitle className="flex items-center text-xl font-semibold">
             <FileText className="w-5 h-5 ml-2" />

@@ -325,7 +325,7 @@ export default function LabPaymentDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent size="3xl" className="overflow-y-hidden" dir="rtl">
+      <DialogContent size="3xl" className="overflow-y-auto max-h-[90vh]" dir="rtl">
         <DialogHeader className="text-right" dir="rtl">
           <DialogTitle className="flex items-center gap-2 justify-end text-right">
             <span>دفعة شهرية للمخبر</span>

@@ -528,7 +528,7 @@ export default function AppointmentPrintDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent size="4xl" className="overflow-y-hidden">
+      <DialogContent size="4xl" className="overflow-y-auto max-h-[90vh]">
         <DialogHeader className="pb-4">
           <div className="flex items-center justify-between">
             <div>

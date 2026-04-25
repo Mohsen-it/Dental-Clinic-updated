@@ -176,7 +176,7 @@ export default function EditInventoryDialog({
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
-      <DialogContent size="lg" className="overflow-y-hidden">
+      <DialogContent size="lg" className="overflow-y-auto max-h-[90vh]">
         <DialogHeader>
           <DialogTitle className="text-xl font-bold text-foreground">
             تعديل عنصر المخزون

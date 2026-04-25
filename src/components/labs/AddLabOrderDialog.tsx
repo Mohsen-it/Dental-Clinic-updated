@@ -208,7 +208,7 @@ export default function AddLabOrderDialog({ open, onOpenChange, editingOrder }: 
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent size="3xl" className="overflow-y-hidden" dir="rtl">
+      <DialogContent size="3xl" className="overflow-y-auto max-h-[90vh]" dir="rtl">
         <DialogHeader className="text-right" dir="rtl">
           <DialogTitle className="flex items-center gap-2 justify-end text-right">
             <span>{editingOrder ? 'تعديل طلب المخبر' : 'إضافة طلب مختبر جديد'}</span>

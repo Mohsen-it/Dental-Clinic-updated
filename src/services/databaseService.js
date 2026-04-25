@@ -42,11 +42,17 @@ class DatabaseService {
       try {
         this.db = new Database(dbPath)
 
-        // Set a reasonable busy timeout immediately to reduce SQLITE_BUSY errors
+        // Configure SQLite pragmas immediately for optimal performance and concurrency
         try {
+          this.db.pragma('journal_mode = WAL')
+          this.db.pragma('synchronous = NORMAL')
+          this.db.pragma('foreign_keys = ON')
           this.db.pragma('busy_timeout = 5000')
+          this.db.pragma('cache_size = -2000')
+          this.db.pragma('temp_store = MEMORY')
+          console.log('✅ SQLite pragmas configured (WAL, synchronous=NORMAL, foreign_keys=ON, busy_timeout=5000)')
         } catch (e) {
-          // ignore, we'll handle below if needed
+          console.warn('⚠️ Failed to set some pragmas:', e.message)
         }
 
         console.log('✅ Database connection established successfully (attempt', attempt + 1, ')')
@@ -1021,156 +1027,182 @@ class DatabaseService {
   }
 
   runPatientSchemaMigration() {
-    try {
-      console.log('🔄 Starting patient schema migration...')
+    const maxRetries = 5
+    let lastError = null
 
-      // Check if patients table exists and what schema it has
-      const tableExists = this.db.prepare(`
+    for (let attempt = 0; attempt < maxRetries; attempt++) {
+      try {
+        if (attempt > 0) {
+          const delayMs = 500 * Math.pow(2, attempt - 1)
+          console.log(`🔄 Retry attempt ${attempt + 1}/${maxRetries} after ${delayMs}ms delay...`)
+          // Use busy-wait since this is synchronous
+          const end = Date.now() + delayMs
+          while (Date.now() < end) { /* busy-wait */ }
+        }
+
+        this._executePatientSchemaMigration()
+        return // Success, exit early
+      } catch (error) {
+        lastError = error
+        if (error && error.code === 'SQLITE_BUSY') {
+          console.warn(`⚠️ Database is busy during migration (attempt ${attempt + 1}/${maxRetries}): ${error.message}`)
+          continue
+        }
+        // For non-BUSY errors, log and break (don't retry)
+        console.error('❌ Migration failed with non-retryable error:', error.message)
+        break
+      }
+    }
+
+    // If we reach here, all retries failed
+    console.error('❌ Migration failed after all retries:', lastError?.message)
+
+    // Try to restore from backup if it exists
+    try {
+      const backupExists = this.db.prepare(`
         SELECT name FROM sqlite_master
-        WHERE type='table' AND name='patients'
+        WHERE type='table' AND name='patients_backup'
       `).get()
 
-      if (!tableExists) {
-        console.log('✅ No patients table found - will be created by schema.sql')
-        return
-      }
-
-      // Check if migration is needed by checking if new columns exist
-      const tableInfo = this.db.pragma('table_info(patients)')
-      console.log('📋 Current table structure:', tableInfo.map(col => col.name))
-
-      const hasNewSchema = tableInfo.some(col => col.name === 'serial_number')
-      const hasOldSchema = tableInfo.some(col => col.name === 'first_name')
-
-      console.log('🔍 Schema analysis:')
-      console.log('  - Has new schema (serial_number):', hasNewSchema)
-      console.log('  - Has old schema (first_name):', hasOldSchema)
-
-      if (hasNewSchema && !hasOldSchema) {
-        console.log('✅ Migration already completed - new schema detected')
-        return
-      }
-
-      if (!hasOldSchema) {
-        console.log('✅ No old schema detected - no migration needed')
-        return
-      }
-
-      // Get current patient count
-      const patientCount = this.db.prepare('SELECT COUNT(*) as count FROM patients').get()
-      console.log(`📊 Found ${patientCount.count} patients to migrate`)
-
-      // Begin transaction for safe migration
-      const transaction = this.db.transaction(() => {
-        console.log('📋 Creating backup of existing patients...')
-
-        // Step 1: Create backup table
-        this.db.exec(`
-          CREATE TABLE IF NOT EXISTS patients_backup AS
-          SELECT * FROM patients
-        `)
-
-        console.log('🗑️ Dropping old patients table...')
-
-        // Step 2: Drop existing table
+      if (backupExists) {
+        console.log('🔄 Attempting to restore from backup...')
         this.db.exec('DROP TABLE IF EXISTS patients')
-
-        console.log('🏗️ Creating new patients table...')
-
-        // Step 3: Create new table with updated schema
-        this.db.exec(`
-          CREATE TABLE patients (
-            id TEXT PRIMARY KEY,
-            serial_number TEXT UNIQUE NOT NULL,
-            full_name TEXT NOT NULL,
-            gender TEXT NOT NULL CHECK (gender IN ('male', 'female')),
-            age INTEGER NOT NULL CHECK (age > 0),
-            patient_number INTEGER CHECK (patient_number > 0),
-            patient_condition TEXT NOT NULL,
-            allergies TEXT,
-            medical_conditions TEXT,
-            email TEXT,
-            address TEXT,
-            notes TEXT,
-            phone TEXT,
-            date_added DATETIME DEFAULT CURRENT_TIMESTAMP,
-            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-            updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
-          )
-        `)
-
-        console.log('📊 Migrating existing patient data...')
-
-        // Step 4: Migrate data from backup
-        const migrateStmt = this.db.prepare(`
-          INSERT INTO patients (
-            id, serial_number, full_name, gender, age, patient_number, patient_condition,
-            allergies, medical_conditions, email, address, notes, phone,
-            created_at, updated_at
-          )
-          SELECT
-            id,
-            SUBSTR(id, 1, 8) as serial_number,
-            COALESCE(first_name, '') || ' ' || COALESCE(last_name, '') as full_name,
-            'male' as gender,
-            CASE
-              WHEN date_of_birth IS NOT NULL AND date_of_birth != ''
-              THEN CAST((julianday('now') - julianday(date_of_birth)) / 365.25 AS INTEGER)
-              ELSE 25
-            END as age,
-            NULL as patient_number,
-            COALESCE(NULLIF(medical_history, ''), 'يحتاج إلى تقييم طبي') as patient_condition,
-            allergies,
-            insurance_info as medical_conditions,
-            email,
-            address,
-            notes,
-            phone,
-            created_at,
-            updated_at
-          FROM patients_backup
-        `)
-
-        const result = migrateStmt.run()
-        console.log(`✅ Migrated ${result.changes} patient records`)
-
-        // Step 5: Clean up backup table
-        this.db.exec('DROP TABLE IF EXISTS patients_backup')
-
-        console.log('🔧 Migration completed successfully')
-      })
-
-      // Execute the transaction
-      transaction()
-
-      // Force WAL checkpoint to ensure data is written
-      this.db.pragma('wal_checkpoint(TRUNCATE)')
-
-      console.log('✅ Patient schema migration completed successfully')
-
-    } catch (error) {
-      console.error('❌ Migration failed:', error)
-
-      // Try to restore from backup if it exists
-      try {
-        const backupExists = this.db.prepare(`
-          SELECT name FROM sqlite_master
-          WHERE type='table' AND name='patients_backup'
-        `).get()
-
-        if (backupExists) {
-          console.log('🔄 Attempting to restore from backup...')
-          this.db.exec('DROP TABLE IF EXISTS patients')
-          this.db.exec('ALTER TABLE patients_backup RENAME TO patients')
-          console.log('✅ Restored from backup')
-        }
-      } catch (restoreError) {
-        console.error('❌ Failed to restore from backup:', restoreError)
+        this.db.exec('ALTER TABLE patients_backup RENAME TO patients')
+        console.log('✅ Restored from backup')
       }
-
-      // Don't throw error to prevent app from crashing
-      console.log('⚠️ Migration failed but continuing with app startup')
+    } catch (restoreError) {
+      console.error('❌ Failed to restore from backup:', restoreError.message)
     }
+
+    console.log('⚠️ Migration failed but continuing with app startup')
+  }
+
+  _executePatientSchemaMigration() {
+    console.log('🔄 Starting patient schema migration...')
+
+    // Check if patients table exists and what schema it has
+    const tableExists = this.db.prepare(`
+      SELECT name FROM sqlite_master
+      WHERE type='table' AND name='patients'
+    `).get()
+
+    if (!tableExists) {
+      console.log('✅ No patients table found - will be created by schema.sql')
+      return
+    }
+
+    // Check if migration is needed by checking if new columns exist
+    const tableInfo = this.db.pragma('table_info(patients)')
+    console.log('📋 Current table structure:', tableInfo.map(col => col.name))
+
+    const hasNewSchema = tableInfo.some(col => col.name === 'serial_number')
+    const hasOldSchema = tableInfo.some(col => col.name === 'first_name')
+
+    console.log('🔍 Schema analysis:')
+    console.log('  - Has new schema (serial_number):', hasNewSchema)
+    console.log('  - Has old schema (first_name):', hasOldSchema)
+
+    if (hasNewSchema && !hasOldSchema) {
+      console.log('✅ Migration already completed - new schema detected')
+      return
+    }
+
+    if (!hasOldSchema) {
+      console.log('✅ No old schema detected - no migration needed')
+      return
+    }
+
+    // Get current patient count
+    const patientCount = this.db.prepare('SELECT COUNT(*) as count FROM patients').get()
+    console.log(`📊 Found ${patientCount.count} patients to migrate`)
+
+    // Begin transaction for safe migration
+    const transaction = this.db.transaction(() => {
+      console.log('📋 Creating backup of existing patients...')
+
+      // Step 1: Create backup table
+      this.db.exec(`
+        CREATE TABLE IF NOT EXISTS patients_backup AS
+        SELECT * FROM patients
+      `)
+
+      console.log('🗑️ Dropping old patients table...')
+
+      // Step 2: Drop existing table
+      this.db.exec('DROP TABLE IF EXISTS patients')
+
+      console.log('🏗️ Creating new patients table...')
+
+      // Step 3: Create new table with updated schema
+      this.db.exec(`
+        CREATE TABLE patients (
+          id TEXT PRIMARY KEY,
+          serial_number TEXT UNIQUE NOT NULL,
+          full_name TEXT NOT NULL,
+          gender TEXT NOT NULL CHECK (gender IN ('male', 'female')),
+          age INTEGER NOT NULL CHECK (age > 0),
+          patient_number INTEGER CHECK (patient_number > 0),
+          patient_condition TEXT NOT NULL,
+          allergies TEXT,
+          medical_conditions TEXT,
+          email TEXT,
+          address TEXT,
+          notes TEXT,
+          phone TEXT,
+          date_added DATETIME DEFAULT CURRENT_TIMESTAMP,
+          created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+          updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        )
+      `)
+
+      console.log('📊 Migrating existing patient data...')
+
+      // Step 4: Migrate data from backup
+      const migrateStmt = this.db.prepare(`
+        INSERT INTO patients (
+          id, serial_number, full_name, gender, age, patient_number, patient_condition,
+          allergies, medical_conditions, email, address, notes, phone,
+          created_at, updated_at
+        )
+        SELECT
+          id,
+          SUBSTR(id, 1, 8) as serial_number,
+          COALESCE(first_name, '') || ' ' || COALESCE(last_name, '') as full_name,
+          'male' as gender,
+          CASE
+            WHEN date_of_birth IS NOT NULL AND date_of_birth != ''
+            THEN CAST((julianday('now') - julianday(date_of_birth)) / 365.25 AS INTEGER)
+            ELSE 25
+          END as age,
+          NULL as patient_number,
+          COALESCE(NULLIF(medical_history, ''), 'يحتاج إلى تقييم طبي') as patient_condition,
+          allergies,
+          insurance_info as medical_conditions,
+          email,
+          address,
+          notes,
+          phone,
+          created_at,
+          updated_at
+        FROM patients_backup
+      `)
+
+      const result = migrateStmt.run()
+      console.log(`✅ Migrated ${result.changes} patient records`)
+
+      // Step 5: Clean up backup table
+      this.db.exec('DROP TABLE IF EXISTS patients_backup')
+
+      console.log('🔧 Migration completed successfully')
+    })
+
+    // Execute the transaction
+    transaction()
+
+    // Force WAL checkpoint to ensure data is written
+    this.db.pragma('wal_checkpoint(TRUNCATE)')
+
+    console.log('✅ Patient schema migration completed successfully')
   }
 
   // Patient operations
@@ -2407,13 +2439,14 @@ class DatabaseService {
     this.db = new Database(dbPath)
 
     // Enable foreign keys and other optimizations
-    this.db.pragma('foreign_keys = ON')
     this.db.pragma('journal_mode = WAL')
     this.db.pragma('synchronous = NORMAL')
-    this.db.pragma('cache_size = 1000')
+    this.db.pragma('foreign_keys = ON')
+    this.db.pragma('busy_timeout = 5000')
+    this.db.pragma('cache_size = -2000')
     this.db.pragma('temp_store = MEMORY')
 
-    console.log('✅ Database connection reinitialized')
+    console.log('✅ Database connection reinitialized with optimized pragmas')
 
     // Run migrations and ensure all tables exist after restoration
     try {

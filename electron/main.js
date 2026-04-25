@@ -383,6 +383,21 @@ function createWindow() {
   })
 }
 
+// Prevent multiple instances of the app from running simultaneously
+const gotTheLock = app.requestSingleInstanceLock()
+if (!gotTheLock) {
+  console.log('⚠️ Another instance of the app is already running. Exiting...')
+  app.quit()
+} else {
+  app.on('second-instance', () => {
+    console.log('⚠️ Attempted to open a second instance. Focusing existing window...')
+    if (mainWindow) {
+      if (mainWindow.isMinimized()) mainWindow.restore()
+      mainWindow.focus()
+    }
+  })
+}
+
 app.whenReady().then(async () => {
   console.log('🚀 Electron app is ready, initializing services...')
 
@@ -600,12 +615,24 @@ app.on('window-all-closed', () => {
   }
 })
 
-// Clear authentication session when app is about to quit
+// Graceful shutdown: close database and clear authentication session
 app.on('before-quit', () => {
-  console.log('🔐 Clearing authentication session before app quit')
+  console.log('🔐 Shutting down gracefully...')
+
+  // Close database connection to prevent SQLITE_BUSY on next launch
+  if (databaseService) {
+    try {
+      console.log('🗄️ Closing database connection...')
+      databaseService.close()
+      console.log('✅ Database connection closed')
+    } catch (error) {
+      console.error('❌ Error closing database:', error.message)
+    }
+  }
+
+  // Clear authentication session
   if (mainWindow && mainWindow.webContents && !mainWindow.isDestroyed()) {
     try {
-      // Only clear session storage, keep localStorage for theme and other preferences
       mainWindow.webContents.executeJavaScript(`
         sessionStorage.removeItem('dental_clinic_auth');
         console.log('🔐 Authentication session cleared');
@@ -614,6 +641,19 @@ app.on('before-quit', () => {
       })
     } catch (error) {
       console.log('Could not clear session (window already destroyed)')
+    }
+  }
+})
+
+// Final cleanup before app exits (last chance to close database)
+app.on('will-quit', () => {
+  console.log('🔐 Final cleanup on will-quit...')
+  if (databaseService) {
+    try {
+      databaseService.close()
+      console.log('✅ Database closed on will-quit')
+    } catch (error) {
+      console.error('❌ Error closing database on will-quit:', error.message)
     }
   }
 })

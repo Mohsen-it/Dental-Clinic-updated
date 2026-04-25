@@ -516,7 +516,7 @@ export default function EnhancedToothDetailsDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent size="4xl" className="overflow-y-hidden" dir="rtl">
+      <DialogContent size="4xl" className="overflow-y-auto max-h-[90vh]" dir="rtl">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-3 text-right">
             <div
